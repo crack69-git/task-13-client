@@ -19,7 +19,11 @@ import {
   TextArea,
 } from "@heroui/react";
 import React from "react";
-import { FaArrowRight, FaLocationDot } from "react-icons/fa6";
+import {
+  FaArrowRight,
+  FaLocationDot,
+  FaSquareArrowUpRight,
+} from "react-icons/fa6";
 
 const BuyerForm = () => {
   const onSubmit = (e) => {
@@ -29,10 +33,16 @@ const BuyerForm = () => {
     console.log(data);
   };
   return (
-    <div className="mx-auto flex flex-col items-center justify-center w-full max-w-md min-h-[calc(100vh-30vh)] gap-4">
-      <Card className="w-2xl bg-white border shadow-md" variant="secondary">
+    <div className="mx-auto flex flex-col items-center justify-center w-full max-w-md min-h-[calc(100vh-30vh)] gap-4 py-10">
+      <Card
+        className="w-2xl bg-white border shadow-md py-10 px-10"
+        variant="secondary"
+      >
         <Card.Header>
-          <Card.Title className="text-2xl">Create Sourcing Request</Card.Title>
+          <Card.Title className="text-2xl flex items-center gap-2">
+            <FaSquareArrowUpRight />
+            Create Sourcing Request
+          </Card.Title>
           <p className="text-sm text-gray-500 mb-5">
             Submit your requirement details to receive fast verified supplier
             quotes.

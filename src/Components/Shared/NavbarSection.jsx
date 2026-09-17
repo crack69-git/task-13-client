@@ -1,6 +1,8 @@
 import React from "react";
 import { Input, Avatar, Badge, Button, Chip } from "@heroui/react";
 import { FiSearch, FiBell } from "react-icons/fi";
+import Link from "next/link";
+import { HiOutlineLogout } from "react-icons/hi";
 
 export default function NavbarSection() {
   return (
@@ -34,23 +36,32 @@ export default function NavbarSection() {
 
         {/* Navigation Links */}
         <div className="hidden md:flex items-center gap-1 justify-center">
-          <Button
-            variant="solid"
-            className="bg-slate-200/80 text-slate-900 font-bold text-xs h-10 px-4 rounded-xl"
-          >
-            New Request
-          </Button>
-
-          <Button
-            variant="light"
-            className="text-slate-600 font-medium hover:text-slate-900 text-xs h-10 px-4 rounded-xl"
-          >
-            Track Order
-          </Button>
+          <Link href="/">
+            <Button
+              variant="solid"
+              className="bg-slate-200/80 text-slate-900 font-bold text-xs h-10 px-4 rounded-xl"
+            >
+              New Request
+            </Button>
+          </Link>
+          <Link href="/track-order">
+            <Button
+              variant="light"
+              className="text-slate-600 font-medium hover:text-slate-900 text-xs h-10 px-4 rounded-xl"
+            >
+              Track Order
+            </Button>
+          </Link>
         </div>
 
         {/* Search & Actions */}
         <div className="flex items-center justify-end gap-3">
+          <Link
+            href="/login"
+            className="bg-red-50 p-2 rounded-full hover:bg-red-100 transition-colors duration-200 border border-red-200"
+          >
+            <HiOutlineLogout color="red" size={25} />
+          </Link>
           <div className="h-5 w-[1px] bg-slate-200 hidden sm:block" />
 
           {/* User Profile */}
