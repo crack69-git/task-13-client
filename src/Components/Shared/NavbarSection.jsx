@@ -8,6 +8,7 @@ import { headers } from "next/headers";
 import Image from "next/image";
 import { getUserById } from "@/lib/actions/getData";
 import LogoutButtonSection from "./LogoutButtonSection";
+import NavLink from "./NavLink";
 
 export default async function NavbarSection() {
   const session = await auth.api.getSession({
@@ -47,23 +48,9 @@ export default async function NavbarSection() {
         </div>
 
         {/* Navigation Links */}
-        <div className="hidden md:flex items-center gap-1 justify-center">
-          <Link href="/">
-            <Button
-              variant="solid"
-              className="bg-slate-200/80 text-slate-900 font-bold text-xs h-10 px-4 rounded-xl"
-            >
-              New Request
-            </Button>
-          </Link>
-          <Link href="/track-order">
-            <Button
-              variant="light"
-              className="text-slate-600 font-medium hover:text-slate-900 text-xs h-10 px-4 rounded-xl"
-            >
-              Track Order
-            </Button>
-          </Link>
+        <div className="hidden md:flex items-center gap-5 justify-center">
+          <NavLink href="/buyer">New Request</NavLink>
+          <NavLink href="/buyer/track-orders">Track Order</NavLink>
         </div>
 
         {/* Search & Actions */}
