@@ -1,4 +1,5 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import {
   Button,
   Card,
@@ -11,16 +12,33 @@ import {
   TextField,
 } from "@heroui/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { FaLocationArrow } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { IoArrowRedoSharp } from "react-icons/io5";
 
 const page = () => {
-  const onSubmit = (e) => {
+  const router = useRouter();
+  const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData.entries());
-    console.log(data);
+    const result = Object.fromEntries(formData.entries());
+    console.log(result);
+    const { data, error } = await authClient.signIn.email({
+      email: result.email,
+      password: result.password, // required, The password of the user. It should be at least 8 characters long and max 128 by default.
+      rememberMe: true, // If false, the user will be signed out when the browser is closed. (optional) (default: true)
+      callbackURL: "/buyer", // An optional URL to redirect to after the user signs in. (optional)
+    });
+    if (data) {
+      alert("User logged in successfully! ");
+      router.push("/buyer");
+    }
+    if (error) {
+      alert("Error logging in user: " + error.message);
+      return;
+    }
   };
   return (
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-30vh)] gap-4">
@@ -50,7 +68,7 @@ const page = () => {
               <Input placeholder="john@example.com" />
               <FieldError />
             </TextField>
-            <TextField isRequired minLength={8} name="password" type="password">
+            <TextField isRequired name="password" type="password">
               <Label>Password</Label>
               <Input placeholder="Enter your password" />
 
@@ -83,7 +101,7 @@ const page = () => {
               className="text-blue-500 flex items-center gap-1 hover:underline"
             >
               Sign up
-              <FaLocationArrow />
+              <IoArrowRedoSharp />
             </Link>
           </p>
         </Card.Footer>

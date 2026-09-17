@@ -1,4 +1,5 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import {
   Button,
   Card,
@@ -13,17 +14,34 @@ import {
   TextField,
 } from "@heroui/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { FaLocationArrow } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { IoArrowRedoSharp } from "react-icons/io5";
 
 const page = () => {
-  const onSubmit = (e) => {
+  const router = useRouter();
+  const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData.entries());
-    console.log(data);
+    const result = Object.fromEntries(formData.entries());
+    console.log(result);
+    const { data, error } = await authClient.signUp.email({
+      name: result.name,
+      email: result.email,
+      password: result.password,
+      image: result.imageLink,
+      role: result.role,
+      callbackURL: "/login",
+    });
+    if (data) {
+      alert("User registered successfully! ");
+      router.push("/login");
+    }
+    if (error) {
+      alert("Error registering user: " + error.message);
+    }
   };
   return (
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-30vh)] gap-4">
