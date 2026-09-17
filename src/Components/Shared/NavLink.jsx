@@ -11,8 +11,8 @@ const NavLink = ({ href, children }) => {
       href={href}
       className={
         isActive
-          ? "bg-slate-800 text-white font-semibold p-2 rounded-lg text-sm hover:bg-slate-900 transition-colors duration-200"
-          : ""
+          ? "bg-orange-600 text-white font-semibold p-2 rounded-lg text-sm hover:bg-orange-700 transition-colors duration-200 flex items-center gap-1"
+          : "flex items-center gap-1 text-sm font-medium"
       }
     >
       {children}

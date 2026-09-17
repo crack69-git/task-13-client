@@ -2,13 +2,14 @@ import React from "react";
 import { Input, Avatar, Badge, Button, Chip } from "@heroui/react";
 import { FiSearch, FiBell } from "react-icons/fi";
 import Link from "next/link";
-import { HiOutlineLogout } from "react-icons/hi";
+import { HiOutlineLogout, HiOutlineNewspaper } from "react-icons/hi";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import Image from "next/image";
 import { getUserById } from "@/lib/actions/getData";
 import LogoutButtonSection from "./LogoutButtonSection";
 import NavLink from "./NavLink";
+import { GiRadarDish } from "react-icons/gi";
 
 export default async function NavbarSection() {
   const session = await auth.api.getSession({
@@ -49,8 +50,14 @@ export default async function NavbarSection() {
 
         {/* Navigation Links */}
         <div className="hidden md:flex items-center gap-5 justify-center">
-          <NavLink href="/buyer">New Request</NavLink>
-          <NavLink href="/buyer/track-orders">Track Order</NavLink>
+          <NavLink href="/buyer">
+            <HiOutlineNewspaper />
+            <span> New Request</span>
+          </NavLink>
+          <NavLink href="/buyer/track-orders">
+            <GiRadarDish />
+            Track Order
+          </NavLink>
         </div>
 
         {/* Search & Actions */}
