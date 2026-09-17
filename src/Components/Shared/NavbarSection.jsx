@@ -3,8 +3,20 @@ import { Input, Avatar, Badge, Button, Chip } from "@heroui/react";
 import { FiSearch, FiBell } from "react-icons/fi";
 import Link from "next/link";
 import { HiOutlineLogout } from "react-icons/hi";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import Image from "next/image";
+import { getUserById } from "@/lib/actions/getData";
+import LogoutButtonSection from "./LogoutButtonSection";
 
-export default function NavbarSection() {
+export default async function NavbarSection() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  const user = session?.user;
+  console.log("Current user session:", user.id);
+  const users = await getUserById(user?.id); // Fetch user data using the getUserById function
+  console.log("Fetched user data:", users);
   return (
     <div className="w-full  flex justify-center">
       <div className="w-full mx-auto bg-white border border-gray-200/80  shadow-sm px-4 py-4 flex items-center justify-between gap-4">
@@ -56,27 +68,33 @@ export default function NavbarSection() {
 
         {/* Search & Actions */}
         <div className="flex items-center justify-end gap-3">
-          <Link
-            href="/login"
-            className="bg-red-50 p-2 rounded-full hover:bg-red-100 transition-colors duration-200 border border-red-200"
-          >
-            <HiOutlineLogout color="red" size={25} />
-          </Link>
+          <LogoutButtonSection />
           <div className="h-5 w-[1px] bg-slate-200 hidden sm:block" />
 
           {/* User Profile */}
           <div className="flex items-center gap-2.5 pl-1">
-            <Avatar
-              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop"
-              className="w-8 h-8 text-xs shrink-0"
-              isBordered={false}
-            />
+            <div>
+              {users?.image ? (
+                <Image
+                  loading="lazy"
+                  src={users?.image}
+                  alt="User Image"
+                  width={32}
+                  height={32}
+                  className="rounded-full"
+                />
+              ) : (
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-200 text-xs font-semibold text-slate-700">
+                  {users?.name?.charAt(0)?.toUpperCase() || "U"}
+                </div>
+              )}
+            </div>
             <div className="hidden sm:flex flex-col text-left">
               <span className="text-xs font-semibold text-slate-900 leading-tight">
-                Elena Vance
+                {users?.name}
               </span>
               <span className="text-[10px] text-slate-500 font-medium leading-tight mt-0.5">
-                Sourcing Lead
+                {users?.role}
               </span>
             </div>
           </div>
