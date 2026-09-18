@@ -1,8 +1,12 @@
-import { Chip, Table } from "@heroui/react";
+import { getPosts } from "@/lib/actions/getData";
+import { Button, Chip, Table } from "@heroui/react";
+import Link from "next/link";
 import React from "react";
 import { FaTruckMoving } from "react-icons/fa6";
 
-const page = () => {
+const page = async () => {
+  const orders = await getPosts();
+  console.log("Orders:", orders);
   return (
     <div className="w-11/12 mx-auto py-10">
       <div className="flex items-center gap-4 mb-5">
@@ -46,17 +50,43 @@ const page = () => {
               </Table.Column>
             </Table.Header>
             <Table.Body>
-              <Table.Row>
-                <Table.Cell>Kate Moore</Table.Cell>
-                <Table.Cell>CEO</Table.Cell>
-                <Table.Cell>
-                  <Chip color="success" size="sm" variant="soft">
-                    Active
-                  </Chip>
-                </Table.Cell>
-                <Table.Cell>kate@acme.com</Table.Cell>
-                <Table.Cell>kate@acme.com</Table.Cell>
-              </Table.Row>
+              {orders.length > 0 ? (
+                orders.map((order, index) => (
+                  <Table.Row key={index}>
+                    <Table.Cell className="">
+                      {order._id.slice(0, 8)}...
+                    </Table.Cell>
+                    <Table.Cell>{order.requirementName}</Table.Cell>
+                    <Table.Cell>
+                      <Chip
+                        className={`${order.status === "active" ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800 border border-yellow-300"}`}
+                        size="sm"
+                        variant="soft"
+                      >
+                        {order.status}
+                      </Chip>
+                    </Table.Cell>
+                    <Table.Cell>{order.targetDate}</Table.Cell>
+                    <Table.Cell>
+                      <Link href={`/buyer/track-orders/${order._id}`}>
+                        <Button
+                          variant="primary"
+                          size="sm"
+                          className="rounded-md bg-orange-600"
+                        >
+                          View Details
+                        </Button>
+                      </Link>
+                    </Table.Cell>
+                  </Table.Row>
+                ))
+              ) : (
+                <Table.Row>
+                  <Table.Cell colSpan={5} className="text-center">
+                    No orders found.
+                  </Table.Cell>
+                </Table.Row>
+              )}
             </Table.Body>
           </Table.Content>
         </Table.ResizableContainer>

@@ -1,3 +1,4 @@
+import { getPostById } from "@/lib/actions/getData";
 import React from "react";
 import {
   FiCheck,
@@ -48,7 +49,11 @@ const activities = [
   },
 ];
 
-const page = ({ params }) => {
+const page = async ({ params }) => {
+  const { id } = await params;
+  console.log("Order ID:", id);
+  const post = await getPostById(id);
+
   return (
     <main className="min-h-screen bg-[#f3f3ef] px-4 py-8 text-slate-800 md:px-8">
       <div className="mx-auto max-w-6xl rounded-[18px] border border-slate-200 bg-[#f9f9f7] shadow-[0_18px_45px_rgba(15,23,42,0.08)]">
@@ -56,15 +61,15 @@ const page = ({ params }) => {
           <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
             <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-slate-600">
               <span className="rounded bg-[#0f172a] px-2.5 py-1 text-[10px] font-semibold tracking-[0.12em] text-white">
-                #SRC-89231
+                {post._id.slice(0, 8)}...
               </span>
               <span className="inline-flex items-center gap-1 rounded border border-slate-200 bg-white px-2 py-1">
                 <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                STAGE 4 • VERIFIED
+                STAGE 4 • {post.status.toUpperCase()}
               </span>
               <span className="inline-flex items-center gap-1 rounded border border-emerald-200 bg-emerald-50 px-2 py-1 text-emerald-700">
                 <FiCheck className="h-3.5 w-3.5" />
-                Submitted Oct 15, 2024
+                Submitted {post?.createdAt?.slice(8, 10)}
               </span>
             </div>
 
@@ -82,12 +87,9 @@ const page = ({ params }) => {
 
           <div className="mt-5 flex flex-col gap-2">
             <h1 className="text-3xl font-semibold tracking-[-0.04em] text-slate-900 md:text-[2.1rem]">
-              Organic Turmeric Powder
+              {post.requirementName}
             </h1>
-            <p className="text-base text-slate-500">
-              Export Grade Applepberry variety with certified high curcumin
-              extraction standards.
-            </p>
+            <p className="text-base text-slate-500">{post.specifications}</p>
           </div>
 
           <div className="mt-6 grid gap-3 border border-slate-200 bg-white/60 p-3 text-slate-700 md:grid-cols-4 md:gap-4 md:p-4">
@@ -96,7 +98,8 @@ const page = ({ params }) => {
                 Contract Volume
               </p>
               <p className="text-2xl font-semibold tracking-[-0.04em]">
-                25,000 KG
+                {post.targetQuantity}{" "}
+                {post.unitOfMeasure === "MT" ? "Metric Tons" : ""}
               </p>
             </div>
             <div className="rounded-md border border-slate-200 bg-[#fbfbfa] px-3 py-3">
@@ -104,7 +107,7 @@ const page = ({ params }) => {
                 Agreed Budget
               </p>
               <p className="text-2xl font-semibold tracking-[-0.04em]">
-                $52,500 USD
+                ${post.price} USD
               </p>
             </div>
             <div className="rounded-md border border-slate-200 bg-[#fbfbfa] px-3 py-3">
@@ -112,7 +115,7 @@ const page = ({ params }) => {
                 Destination
               </p>
               <p className="text-2xl font-semibold tracking-[-0.04em]">
-                Chittagong Port
+                {post.deliveryAddress}
               </p>
             </div>
             <div className="rounded-md border border-slate-200 bg-[#fbfbfa] px-3 py-3">
@@ -120,7 +123,7 @@ const page = ({ params }) => {
                 Target Delivery
               </p>
               <p className="text-2xl font-semibold tracking-[-0.04em]">
-                Nov 30, 2025
+                {post.targetDate}
               </p>
             </div>
           </div>

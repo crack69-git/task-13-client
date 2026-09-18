@@ -48,6 +48,7 @@ const BuyerForm = () => {
       targetDate: data.targetDate,
       attachmentLink: data.attachmentLink,
       specifications: data.specifications,
+      createdAt: new Date().toISOString(),
       status: "pending",
     };
     const res = await postRequirements(requiremntsData);
