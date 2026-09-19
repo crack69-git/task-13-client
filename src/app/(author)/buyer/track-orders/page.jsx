@@ -22,7 +22,7 @@ const page = async () => {
         <Table.ResizableContainer>
           <Table.Content
             aria-label="Table with resizable columns"
-            className="min-w-11/12 mx-auto"
+            className="min-w-11/12 mx-auto "
           >
             <Table.Header>
               <Table.Column
@@ -52,7 +52,7 @@ const page = async () => {
             <Table.Body>
               {orders.length > 0 ? (
                 orders.map((order, index) => (
-                  <Table.Row key={index}>
+                  <Table.Row key={index} className="hover:bg-gray-100 ">
                     <Table.Cell className="">
                       {order._id.slice(0, 8)}...
                     </Table.Cell>
@@ -68,15 +68,26 @@ const page = async () => {
                     </Table.Cell>
                     <Table.Cell>{order.targetDate}</Table.Cell>
                     <Table.Cell>
-                      <Link href={`/buyer/track-orders/${order._id}`}>
+                      {order.status === "Pending" ? (
                         <Button
                           variant="primary"
                           size="sm"
                           className="rounded-md bg-orange-600"
+                          isDisabled
                         >
                           View Details
                         </Button>
-                      </Link>
+                      ) : (
+                        <Link href={`/buyer/track-orders/${order._id}`}>
+                          <Button
+                            variant="primary"
+                            size="sm"
+                            className="rounded-md bg-orange-600"
+                          >
+                            View Details
+                          </Button>
+                        </Link>
+                      )}
                     </Table.Cell>
                   </Table.Row>
                 ))

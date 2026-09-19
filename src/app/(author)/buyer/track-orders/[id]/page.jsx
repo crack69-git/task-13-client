@@ -20,16 +20,6 @@ const procurementSteps = [
   { step: "STEP 06", title: "Completed", status: "Pending Delivery" },
 ];
 
-const specs = [
-  { label: "Required Volume", value: "25,000 KG" },
-  { label: "Lot spec 500 bags × 50kg", value: "" },
-  { label: "Verified Quality Standard", value: "Curcumin 3.5%" },
-  { label: "Packaging Specification", value: "Multi-Wall Kraft + PE" },
-  { label: "Unit & Total Target Cost", value: "$2.107 KG - $52,500" },
-  { label: "Origin", value: "India" },
-  { label: "Destination", value: "Chittagong Port" },
-];
-
 const activities = [
   {
     text: "Batch file analysis completed and COA approved",
@@ -217,21 +207,55 @@ const page = async ({ params }) => {
               </div>
 
               <div className="grid gap-4 md:grid-cols-2">
-                {specs.map((item, index) => (
-                  <div
-                    key={`${item.label}-${index}`}
-                    className={`rounded-lg border border-slate-200 bg-[#fafaf9] p-3 ${
-                      index === 0 || index === 2 ? "md:col-span-1" : ""
-                    }`}
-                  >
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
-                      {item.label}
-                    </p>
-                    <p className="mt-2 text-base font-medium text-slate-800">
-                      {item.value || "—"}
-                    </p>
-                  </div>
-                ))}
+                <div className="rounded-lg border border-slate-200 bg-[#fafaf9] p-3">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+                    Required Volume
+                  </p>
+                  <p className="mt-2 text-base font-medium text-slate-800">
+                    {post.targetQuantity} {post.unitOfMeasure}
+                  </p>
+                </div>
+                <div className="rounded-lg border border-slate-200 bg-[#fafaf9] p-3">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+                    Quality Tier
+                  </p>
+                  <p className="mt-2 text-base font-medium text-slate-800">
+                    {post.qualityTier || "—"}
+                  </p>
+                </div>
+                <div className="rounded-lg border border-slate-200 bg-[#fafaf9] p-3">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+                    Price Target
+                  </p>
+                  <p className="mt-2 text-base font-medium text-slate-800">
+                    {post.price ? `$${post.price} USD` : "—"}
+                  </p>
+                </div>
+
+                <div className="rounded-lg border border-slate-200 bg-[#fafaf9] p-3">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+                    Target Delivery
+                  </p>
+                  <p className="mt-2 text-base font-medium text-slate-800">
+                    {post.targetDate || "—"}
+                  </p>
+                </div>
+                <div className="rounded-lg border border-slate-200 bg-[#fafaf9] p-3 md:col-span-2">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+                    Delivery Address
+                  </p>
+                  <p className="mt-2 text-base font-medium text-slate-800">
+                    {post.deliveryAddress || "—"}
+                  </p>
+                </div>
+                <div className="rounded-lg border border-slate-200 bg-[#fafaf9] p-3 md:col-span-2">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+                    Specifications
+                  </p>
+                  <p className="mt-2 text-base font-medium text-slate-800">
+                    {post.specifications || "—"}
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -241,108 +265,87 @@ const page = async ({ params }) => {
                   <h3 className="text-xl font-semibold text-slate-900">
                     Dedicated Lead
                   </h3>
-                  <span className="rounded border border-sky-200 bg-sky-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-sky-700">
+                  {/* <span className="rounded border border-sky-200 bg-sky-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-sky-700">
                     Online now
-                  </span>
+                  </span> */}
                 </div>
 
-                <div className="flex items-center gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#dfeaf5] text-sm font-semibold text-sky-700">
-                    EV
-                  </div>
-                  <div>
-                    <p className="text-lg font-semibold text-slate-900">
-                      Elena Vance
-                    </p>
-                    <p className="text-sm text-slate-500">
-                      Sourcing Lead • Agro Commodities
-                    </p>
-                  </div>
-                </div>
+                <p className="text-sm text-slate-500 mb-10">
+                  No dedicated lead assigned
+                </p>
 
-                <div className="mt-4 space-y-3">
-                  <button className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#0f172a] px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800">
-                    <FiMail className="h-4 w-4" />
-                    Message Lead
-                  </button>
-                  <button className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-100">
-                    <FiUploadCloud className="h-4 w-4" />
-                    Download Spec Sheet & COA
-                  </button>
+                <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                  <div className="mb-4 flex items-center justify-between">
+                    <h3 className="text-xl font-semibold text-slate-900">
+                      Source X Protection
+                    </h3>
+                    <span className="inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-700">
+                      <FiShield className="h-3 w-3" />
+                      Secure
+                    </span>
+                  </div>
+
+                  <ul className="space-y-3 text-sm text-slate-600">
+                    <li className="flex items-start gap-2">
+                      <span className="mt-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
+                        <FiCheckCircle className="h-3.5 w-3.5" />
+                      </span>
+                      <span>100% independent accredited lab verification</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="mt-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
+                        <FiCheckCircle className="h-3.5 w-3.5" />
+                      </span>
+                      <span>
+                        Escrow payment release on port of entry dispatch
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="mt-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
+                        <FiCheckCircle className="h-3.5 w-3.5" />
+                      </span>
+                      <span>Full cargo transit marine insurance coverage</span>
+                    </li>
+                  </ul>
                 </div>
               </div>
+            </div>
 
-              <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-                <div className="mb-4 flex items-center justify-between">
-                  <h3 className="text-xl font-semibold text-slate-900">
-                    Source X Protection
-                  </h3>
-                  <span className="inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-700">
-                    <FiShield className="h-3 w-3" />
-                    Secure
-                  </span>
-                </div>
-
-                <ul className="space-y-3 text-sm text-slate-600">
-                  <li className="flex items-start gap-2">
-                    <span className="mt-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
-                      <FiCheckCircle className="h-3.5 w-3.5" />
-                    </span>
-                    <span>100% independent accredited lab verification</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="mt-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
-                      <FiCheckCircle className="h-3.5 w-3.5" />
-                    </span>
-                    <span>
-                      Escrow payment release on port of entry dispatch
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="mt-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
-                      <FiCheckCircle className="h-3.5 w-3.5" />
-                    </span>
-                    <span>Full cargo transit marine insurance coverage</span>
-                  </li>
-                </ul>
+            <div className="mt-6 rounded-xl border border-slate-200 bg-white p-5 shadow-sm col-span-2">
+              <div className="mb-4 flex items-center justify-between">
+                <h3 className="text-xl font-semibold text-slate-900">
+                  Milestone & Audit Trail
+                </h3>
+                <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-600">
+                  <FiClock className="h-3.5 w-3.5" />
+                  Last updated today
+                </span>
               </div>
-            </div>
-          </div>
 
-          <div className="mt-6 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-            <div className="mb-4 flex items-center justify-between">
-              <h3 className="text-xl font-semibold text-slate-900">
-                Milestone & Audit Trail
-              </h3>
-              <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-600">
-                <FiClock className="h-3.5 w-3.5" />
-                Last updated today
-              </span>
-            </div>
-
-            <div className="space-y-4">
-              {activities.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex gap-4 border-t border-slate-200 pt-4 first:border-t-0 first:pt-0"
-                >
-                  <div className="flex flex-col items-center">
-                    <span className="mt-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-slate-900" />
-                    {/* {index < activities.length - 1 && (
+              <div className="space-y-4">
+                {activities.map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex gap-4 border-t border-slate-200 pt-4 first:border-t-0 first:pt-0"
+                  >
+                    <div className="flex flex-col items-center">
+                      <span className="mt-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-slate-900" />
+                      {/* {index < activities.length - 1 && (
                       <span className="mt-2 h-8 w-px bg-slate-200" />
                     )} */}
-                  </div>
+                    </div>
 
-                  <div className="flex-1">
-                    <div className="flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
-                      <p className="text-sm text-slate-700">{item.text}</p>
-                      <span className="text-xs font-medium uppercase tracking-[0.12em] text-slate-500">
-                        {item.date}
-                      </span>
+                    <div className="flex-1">
+                      <div className="flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
+                        <p className="text-sm text-slate-700">{item.text}</p>
+                        <span className="text-xs font-medium uppercase tracking-[0.12em] text-slate-500">
+                          {item.date}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>

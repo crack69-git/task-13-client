@@ -29,11 +29,14 @@ const page = () => {
       email: result.email,
       password: result.password, // required, The password of the user. It should be at least 8 characters long and max 128 by default.
       rememberMe: true, // If false, the user will be signed out when the browser is closed. (optional) (default: true)
-      callbackURL: "/buyer", // An optional URL to redirect to after the user signs in. (optional)
     });
     if (data) {
       alert("User logged in successfully! ");
-      router.push("/buyer");
+      if (data.user.role === "buyer") {
+        router.push("/buyer");
+      } else if (data.user.role === "admin") {
+        router.push("/admin");
+      }
     }
     if (error) {
       alert("Error logging in user: " + error.message);
