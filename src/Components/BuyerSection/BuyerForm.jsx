@@ -50,6 +50,7 @@ const BuyerForm = () => {
       specifications: data.specifications,
       createdAt: new Date().toISOString(),
       status: "pending",
+      delivaryStatus: ["searching"],
     };
     const res = await postRequirements(requiremntsData);
     if (res.acknowledged) {

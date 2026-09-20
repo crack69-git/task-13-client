@@ -1,3 +1,5 @@
+"use client";
+import { patchDelivaryStatus } from "@/lib/actions/patchData";
 import {
   Checkbox,
   CheckboxGroup,
@@ -8,7 +10,9 @@ import {
 } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import clsx from "clsx";
-const MultipleSelect = () => {
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+const MultipleSelect = ({ delivaryStatus, id }) => {
   const deliveryOptions = [
     {
       title: "Searching",
@@ -31,7 +35,33 @@ const MultipleSelect = () => {
       value: "delivered",
     },
   ];
+  const router = useRouter();
+  const [stage, setStage] = useState(delivaryStatus || []);
+  console.log("Current stage:", stage);
+  const handleCheckboxChange = async (value) => {
+    // 1. Calculate the new state synchronously
+    const updatedStage = stage.includes(value)
+      ? stage.filter((item) => item !== value)
+      : [...stage, value];
 
+    // 2. Update state for UI rendering
+    setStage(updatedStage);
+
+    // 3. Send the updated state directly to the server action/API
+    try {
+      const res = await patchDelivaryStatus(id, updatedStage);
+
+      if (res.modifiedCount > 0) {
+        alert("Delivery status updated successfully!");
+        router.refresh();
+      } else {
+        alert("Failed to update delivery status. Please try again.");
+      }
+    } catch (error) {
+      console.error("Failed to update status:", error);
+      alert("An error occurred while updating status.");
+    }
+  };
   return (
     <div
       className="flex w-full flex-col items-center gap-10"
@@ -47,23 +77,29 @@ const MultipleSelect = () => {
     >
       <section className="flex w-full max-w-none flex-col gap-4">
         <CheckboxGroup
-          defaultValue={["searching"]}
+          defaultValue={delivaryStatus}
           name="delivery"
           variant="secondary"
         >
-          <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-5">
+          <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             {deliveryOptions.map((option) => (
-              <Checkbox key={option.value} value={option.value}>
+              <Checkbox
+                key={option.value}
+                value={option.value}
+                onChange={() => {
+                  handleCheckboxChange(option.value);
+                }}
+              >
                 <Checkbox.Content
                   className={clsx(
                     "group relative flex w-full flex-col gap-6 rounded-xl border bg-surface px-5 py-4 transition-all data-[selected=true]:border-accent data-[selected=true]:bg-accent/10",
-                    "data-[focus-visible=true]:border-accent data-[focus-visible=true]:bg-accent/10 ",
+                    "data-[focus-visible=true]:border-accent data-[focus-visible=true]:bg-accent/10 h-full",
                   )}
                 >
                   <Checkbox.Control className="absolute right-2 size-5">
                     <Checkbox.Indicator />
                   </Checkbox.Control>
-                  <div className="flex flex-col gap-1 ">
+                  <div className="flex flex-col gap-1 h-full">
                     <span>{option.title}</span>
                   </div>
                 </Checkbox.Content>

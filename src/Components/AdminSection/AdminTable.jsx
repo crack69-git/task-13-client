@@ -2,6 +2,7 @@ import { getPosts } from "@/lib/actions/getData";
 import { Button, Chip, Table } from "@heroui/react";
 import Link from "next/link";
 import React from "react";
+import InspectButton from "./InspectButton";
 
 const AdminTable = async () => {
   const data = await getPosts();
@@ -22,7 +23,7 @@ const AdminTable = async () => {
             </Table.Header>
             <Table.Body>
               {data.map((item) => (
-                <Table.Row key={item.id}>
+                <Table.Row key={item._id}>
                   <Table.Cell>{item._id.slice(0, 8)}...</Table.Cell>
                   <Table.Cell>Buyer</Table.Cell>
                   <Table.Cell>{item.requirementName}</Table.Cell>
@@ -39,15 +40,7 @@ const AdminTable = async () => {
                     </Chip>
                   </Table.Cell>
                   <Table.Cell>
-                    <Link href={`/admin/inspect/${item._id}`}>
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        className="bg-green-950 rounded-lg"
-                      >
-                        Inspect
-                      </Button>
-                    </Link>
+                    <InspectButton status={item.status} id={item._id} />
                   </Table.Cell>
                 </Table.Row>
               ))}

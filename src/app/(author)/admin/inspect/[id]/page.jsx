@@ -62,7 +62,10 @@ const page = async ({ params }) => {
               </span>
             </div>
 
-            <MultipleSelect />
+            <MultipleSelect
+              delivaryStatus={data.delivaryStatus}
+              id={data._id}
+            />
           </div>
         </section>
 
