@@ -8,7 +8,7 @@ import React from "react";
 const InspectButton = ({ status, id }) => {
   const router = useRouter();
   const handleApprove = async (id) => {
-    const res = await patchPostStatus(id, "Approved");
+    const res = await patchPostStatus(id, "approved");
     console.log("Status updated:", res);
     if (res.modifiedCount > 0) {
       alert("Request approved successfully!");
@@ -18,7 +18,7 @@ const InspectButton = ({ status, id }) => {
       return;
     }
   };
-  return status === "Pending" ? (
+  return status === "pending" ? (
     <Button
       onClick={() => handleApprove(id)}
       className="rounded-lg"

@@ -56,3 +56,22 @@ export const getPostById = async (id) => {
     throw error;
   }
 };
+
+export const getSupplierById = async (id) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/supplier/single/${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching supplier by ID:", error);
+    throw error;
+  }
+};

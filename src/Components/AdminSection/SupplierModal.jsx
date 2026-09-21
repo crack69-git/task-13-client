@@ -1,4 +1,5 @@
 "use client";
+import { postSupplier } from "@/lib/actions/postData";
 import {
   Button,
   FieldError,
@@ -8,20 +9,41 @@ import {
   Modal,
   TextField,
 } from "@heroui/react";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { FaMailchimp } from "react-icons/fa6";
 
-const SupplierModal = () => {
-  const onSubmit = (e) => {
+const SupplierModal = ({ id }) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const router = useRouter();
+  const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
     console.log(data);
+    const supplier = {
+      productId: id,
+      supplierCompany: data.supplierCompany,
+      supplierName: data.supplierName,
+      supplierContact: data.supplierContact,
+      supplierPrice: data.supplierPrice,
+    };
+    const res = await postSupplier(supplier);
+    console.log(res);
+    if (res.acknowledged) {
+      alert("Supplier added successfully");
+      setIsOpen(false);
+      router.refresh();
+    } else {
+      alert("Failed to add supplier");
+      return;
+    }
   };
   return (
     <div>
-      <Modal>
+      <Modal open={isOpen} onOpenChange={setIsOpen}>
         <Button
+          onClick={() => setIsOpen(true)}
           variant="secondary"
           className="w-full rounded-lg mt-5"
           size="sm"

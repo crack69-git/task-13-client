@@ -1,6 +1,6 @@
 import MultipleSelect from "@/Components/AdminSection/MultipleSelect";
 import SupplierModal from "@/Components/AdminSection/SupplierModal";
-import { getPostById } from "@/lib/actions/getData";
+import { getPostById, getSupplierById } from "@/lib/actions/getData";
 import { Button, Modal, Switch } from "@heroui/react";
 import Link from "next/link";
 import React from "react";
@@ -33,7 +33,9 @@ const Detail = ({ label, children, className = "" }) => (
 const page = async ({ params }) => {
   const { id } = await params;
   const data = await getPostById(id);
+  const supplier = await getSupplierById(id);
   console.log(data);
+  console.log("supplier:", supplier);
   return (
     <main className="min-h-screen bg-[#f5f7f9] px-4 py-5 text-slate-900 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-[1180px]">
@@ -44,7 +46,7 @@ const page = async ({ params }) => {
                 {data._id.slice(0, 8)}... — Organic Turmeric Powder
               </h1>
               <span className="rounded-full bg-slate-200 px-2 py-0.5 text-[10px] font-semibold text-slate-600">
-                Grade A
+                Grade - {data.qualityTier || "N/A"}
               </span>
             </div>
           </div>
@@ -149,50 +151,34 @@ const page = async ({ params }) => {
                     Assigned Supplier
                   </p>
                   <p className="mt-1 text-[12px] font-semibold">
-                    Bengal Agro Organics Ltd
+                    {supplier.supplierCompany || "No Supplier Assigned"}
                   </p>
                   <p className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-[10px] text-slate-600">
                     <span>
                       <FiUser className="mr-1 inline" />
-                      Kamal Hossain (MD)
+                      {supplier.supplierName || "N/A"}
                     </span>
                     <span>
                       <FiPhone className="mr-1 inline" />
-                      +880 1712-998877
+                      {supplier.supplierContact || "N/A"}
                     </span>
                   </p>
                 </div>
-                <span className="rounded bg-slate-200 px-2 py-0.5 text-[9px] font-medium text-slate-600">
-                  Tier 1
-                </span>
               </div>
             </div>
             <div className="mt-2 grid grid-cols-2 gap-2">
               <Detail label="Quoted Supplier Price">
-                $1.82 <span className="font-normal text-slate-600">/ kg</span>
-                <span className="block text-[10px] font-normal text-slate-600">
-                  $45,500 Total Base Cost
-                </span>
+                ${supplier.supplierPrice || "N/A"}{" "}
+                <span className="font-normal text-slate-600"></span>
               </Detail>
               <Detail label="Platform Gross Margin">
-                <span className="text-indigo-600">$7,000</span>{" "}
+                <span className="text-indigo-600">
+                  ${data.price - supplier.supplierPrice || "N/A"}
+                </span>{" "}
                 <span className="font-normal text-slate-600">USD</span>
-                <span className="block text-[10px] font-normal text-indigo-600">
-                  13.3% Gross Realized
-                </span>
               </Detail>
             </div>
-            <label
-              className="mt-2 block text-[9px] font-semibold uppercase tracking-[0.12em] text-slate-500"
-              htmlFor="notes"
-            >
-              Internal Notes
-            </label>
-            <textarea
-              id="notes"
-              defaultValue="Lab sample verified. Supplier capacity confirmed for 25 MT in 2 shipments. Ready for customs clearance draft."
-              className="mt-1 h-[62px] w-full resize-none rounded-md border border-slate-200 bg-slate-100/90 p-3 text-[10px] leading-[1.45] text-slate-700 outline-none focus:border-sky-400"
-            />
+
             <div className="mt-2 flex items-center justify-between rounded-md bg-slate-100/90 px-3 py-2">
               <div>
                 <p className="text-[12px] font-semibold">Notify Buyer</p>
@@ -209,7 +195,7 @@ const page = async ({ params }) => {
                 </Switch.Content>
               </Switch>
             </div>
-            <SupplierModal />
+            <SupplierModal id={id} />
           </section>
         </div>
 
