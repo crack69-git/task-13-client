@@ -15,6 +15,11 @@ import {
 } from "react-icons/fi";
 import { MdVerified } from "react-icons/md";
 
+export const metadata = {
+  title: "SourceX-Admin-Inspect",
+  description: "Admin inspect page for SourceX",
+};
+
 const Detail = ({ label, children, className = "" }) => (
   <div className={`rounded-md bg-slate-100/90 px-3 py-2.5 ${className}`}>
     <p className="text-[9px] font-semibold uppercase tracking-[0.12em] text-slate-500">

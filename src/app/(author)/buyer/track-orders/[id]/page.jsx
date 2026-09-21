@@ -40,7 +40,10 @@ const activities = [
     date: "Oct 16, 2024",
   },
 ];
-
+export const metadata = {
+  title: "SourceX-Order Tracker",
+  description: "Tracking order details for SourceX",
+};
 const page = async ({ params }) => {
   const { id } = await params;
   console.log("Order ID:", id);

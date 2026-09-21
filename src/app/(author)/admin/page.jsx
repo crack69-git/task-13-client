@@ -5,7 +5,10 @@ import { BiTask } from "react-icons/bi";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import { LuRefreshCcw } from "react-icons/lu";
 import { MdVerified } from "react-icons/md";
-
+export const metadata = {
+  title: "SourceX-Admin",
+  description: "Admin page for SourceX",
+};
 const page = () => {
   return (
     <div className="mx-auto w-full max-w-[1440px] px-3 py-4 sm:px-5 sm:py-5 lg:px-8">

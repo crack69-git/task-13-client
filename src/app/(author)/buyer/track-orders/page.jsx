@@ -3,7 +3,10 @@ import { Button, Chip, Table } from "@heroui/react";
 import Link from "next/link";
 
 import { FaTruckMoving } from "react-icons/fa6";
-
+export const metadata = {
+  title: "SourceX-Tracking Orders",
+  description: "Tracking orders for SourceX",
+};
 const page = async () => {
   const orders = await getPosts();
   console.log("Orders:", orders);
