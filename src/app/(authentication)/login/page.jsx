@@ -44,8 +44,8 @@ const page = () => {
     }
   };
   return (
-    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-30vh)] gap-4">
-      <Card className="w-[400px]">
+    <div className="flex min-h-[calc(100vh-30vh)] flex-col items-center justify-center gap-4 px-4 py-8 sm:px-6">
+      <Card className="w-full max-w-md">
         <Card.Header>
           <div className="mb-4 flex flex-col items-center gap-2">
             <Card.Title className="text-2xl font-bold">
@@ -55,7 +55,7 @@ const page = () => {
               Login to your account
             </p>
           </div>
-          <Form className="flex w-96 flex-col gap-4" onSubmit={onSubmit}>
+          <Form className="flex w-full flex-col gap-4" onSubmit={onSubmit}>
             <TextField
               isRequired
               name="email"
@@ -97,7 +97,7 @@ const page = () => {
           </Button>
         </Card.Header>
         <Card.Footer className="flex flex-col items-center gap-2">
-          <p className="text-sm text-gray-600 flex items-center gap-1">
+          <p className="flex flex-wrap items-center justify-center gap-1 text-center text-sm text-gray-600">
             Don{`'`}t have an account?{" "}
             <Link
               href="/register"
