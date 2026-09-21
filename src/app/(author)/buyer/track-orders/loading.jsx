@@ -1,5 +1,4 @@
 import Loader from "@/Components/Shared/LoadingSection";
-import React from "react";
 
 const loading = () => {
   return (

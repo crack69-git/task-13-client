@@ -10,7 +10,7 @@ import {
   TextField,
 } from "@heroui/react";
 import { useRouter } from "next/navigation";
-import React from "react";
+
 import { FaMailchimp } from "react-icons/fa6";
 
 const SupplierModal = ({ id }) => {

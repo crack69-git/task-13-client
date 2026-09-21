@@ -3,7 +3,7 @@ import SupplierModal from "@/Components/AdminSection/SupplierModal";
 import { getPostById, getSupplierById } from "@/lib/actions/getData";
 import { Switch } from "@heroui/react";
 import Link from "next/link";
-import React from "react";
+
 import { FaPaperclip } from "react-icons/fa6";
 import {
   FiChevronRight,

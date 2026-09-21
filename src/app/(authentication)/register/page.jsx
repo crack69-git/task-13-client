@@ -15,7 +15,7 @@ import {
 } from "@heroui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React from "react";
+
 import { FaLocationArrow } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { IoArrowRedoSharp } from "react-icons/io5";

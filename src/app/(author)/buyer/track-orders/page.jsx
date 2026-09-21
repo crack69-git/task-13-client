@@ -1,7 +1,7 @@
 import { getPosts } from "@/lib/actions/getData";
 import { Button, Chip, Table } from "@heroui/react";
 import Link from "next/link";
-import React from "react";
+
 import { FaTruckMoving } from "react-icons/fa6";
 
 const page = async () => {

@@ -1,6 +1,6 @@
 import { Button, Separator } from "@heroui/react";
 import Link from "next/link";
-import React from "react";
+
 import { MdDashboard } from "react-icons/md";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import LogoutButtonSection from "../Shared/LogoutButtonSection";

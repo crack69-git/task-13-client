@@ -2,7 +2,7 @@
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@heroui/react";
 import { useRouter } from "next/navigation";
-import React from "react";
+
 import { HiOutlineLogout } from "react-icons/hi";
 
 const LogoutButtonSection = () => {

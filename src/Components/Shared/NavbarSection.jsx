@@ -1,4 +1,3 @@
-import React from "react";
 import { Input, Avatar, Badge, Button, Chip } from "@heroui/react";
 import { FiSearch, FiBell } from "react-icons/fi";
 import Link from "next/link";

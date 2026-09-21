@@ -1,6 +1,6 @@
 import AuthNav from "@/Components/Shared/AuthNav";
 import FooterSection from "@/Components/Shared/FooterSection";
-import React from "react";
+
 
 const layout = ({ children }) => {
   return (

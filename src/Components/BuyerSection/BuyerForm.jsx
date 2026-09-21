@@ -21,7 +21,7 @@ import {
   TextArea,
 } from "@heroui/react";
 import { useRouter } from "next/navigation";
-import React from "react";
+
 import {
   FaArrowRight,
   FaLocationDot,

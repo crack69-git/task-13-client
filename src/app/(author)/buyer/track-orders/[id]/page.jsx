@@ -1,7 +1,7 @@
 import StatusWindow from "@/Components/BuyerSection/StatusWindow";
 import { getPostById } from "@/lib/actions/getData";
 import { ST } from "next/dist/shared/lib/utils";
-import React from "react";
+
 import {
   FiCheck,
   FiCheckCircle,
