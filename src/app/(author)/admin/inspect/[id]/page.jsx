@@ -33,8 +33,8 @@ const page = async ({ params }) => {
   console.log(data);
   console.log("supplier:", supplier);
   return (
-    <main className="min-h-screen bg-[#f5f7f9] px-4 py-5 text-slate-900 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-[1180px]">
+    <main className="min-h-screen min-w-0 overflow-x-hidden bg-[#f5f7f9] px-3 py-4 text-slate-900 sm:px-6 sm:py-5 lg:px-8">
+      <div className="mx-auto max-w-295">
         <header className="flex flex-col gap-4 border-b border-slate-200 pb-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <div className="flex flex-wrap items-center gap-2">
@@ -50,7 +50,7 @@ const page = async ({ params }) => {
 
         <section className="mt-4 rounded-lg border border-slate-200 bg-white p-3 shadow-sm">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
-            <div className="flex shrink-0 items-center gap-2 text-[11px] font-medium text-slate-700 lg:w-[175px]">
+            <div className="flex shrink-0 items-center gap-2 text-[11px] font-medium text-slate-700 lg:w-43.75">
               <FiRefreshCw className="text-indigo-500" />
               <span className="flex flex-col text-[16px]">
                 <span className="block text-[12px] uppercase tracking-[0.12em] text-slate-500">
@@ -91,7 +91,7 @@ const page = async ({ params }) => {
                 <FiShield className="text-slate-500" />
               </div>
             </div>
-            <div className="mt-2 grid grid-cols-2 gap-2">
+            <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
               <Detail label="Quantity">
                 {data.targetQuantity} {data.unitOfMeasure}{" "}
               </Detail>
@@ -162,7 +162,7 @@ const page = async ({ params }) => {
                 </div>
               </div>
             </div>
-            <div className="mt-2 grid grid-cols-2 gap-2">
+            <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
               <Detail label="Quoted Supplier Price">
                 ${supplier.supplierPrice || "N/A"}{" "}
                 <span className="font-normal text-slate-600"></span>

@@ -3,7 +3,7 @@ import { patchPostStatus } from "@/lib/actions/patchData";
 import { Button } from "@heroui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { Suspense } from "react";
 
 const InspectButton = ({ status, id }) => {
   const router = useRouter();
@@ -29,7 +29,7 @@ const InspectButton = ({ status, id }) => {
     </Button>
   ) : (
     <Link href={`/admin/inspect/${id}`}>
-      <Button variant="primary" size="sm" className="bg-green-950 rounded-lg">
+      <Button className="rounded-lg" size="sm" variant="secondary">
         Inspect
       </Button>
     </Link>
