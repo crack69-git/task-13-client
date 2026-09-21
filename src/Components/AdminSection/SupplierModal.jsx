@@ -10,11 +10,12 @@ import {
   TextField,
 } from "@heroui/react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import { FaMailchimp } from "react-icons/fa6";
 
 const SupplierModal = ({ id }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const onSubmit = async (e) => {
     e.preventDefault();

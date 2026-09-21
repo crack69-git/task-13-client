@@ -3,7 +3,6 @@ import { patchPostStatus } from "@/lib/actions/patchData";
 import { Button } from "@heroui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { Suspense } from "react";
 
 const InspectButton = ({ status, id }) => {
   const router = useRouter();
