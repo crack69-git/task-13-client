@@ -54,6 +54,8 @@ const LoginPage = () => {
             <p className="text-sm font-semibold text-slate-600">
               Sign in to your account
             </p>
+            <p>Admin mail: admin@gmail.com</p>
+            <p>Pass: 12345678</p>
           </div>
           <Form className="flex w-full flex-col gap-4" onSubmit={onSubmit}>
             <TextField
@@ -98,7 +100,7 @@ const LoginPage = () => {
           <p className="flex flex-wrap items-center justify-center gap-1 text-center text-sm text-gray-600">
             Don't have an account?{" "}
             <Link
-              href="/signup"
+              href="/register"
               className="flex items-center gap-1 text-blue-500 hover:underline"
             >
               Register
