@@ -134,7 +134,7 @@ const page = () => {
           <p className="flex flex-wrap items-center justify-center gap-1 text-center text-sm text-gray-600">
             Already have an account?{" "}
             <Link
-              href="/login"
+              href="/"
               className="text-blue-500 flex items-center gap-1 hover:underline"
             >
               Sign in
