@@ -149,13 +149,13 @@ const BuyerForm = () => {
     </>
   );
   return (
-    <div className="mx-auto flex flex-col items-center justify-center w-full max-w-md min-h-[calc(100vh-30vh)] gap-4 py-10">
+    <div className="mx-auto flex min-h-[70vh] w-full max-w-5xl flex-col items-center justify-center gap-4 px-3 py-6 sm:px-6 sm:py-10">
       <Card
-        className="w-2xl bg-white border shadow-md py-10 px-10"
+        className="w-full border bg-white px-4 py-6 shadow-md sm:px-8 sm:py-10 lg:px-10"
         variant="secondary"
       >
         <Card.Header>
-          <Card.Title className="text-2xl flex items-center gap-2">
+          <Card.Title className="flex items-center gap-2 text-xl sm:text-2xl">
             <FaSquareArrowUpRight />
             Create Sourcing Request
           </Card.Title>
@@ -163,12 +163,15 @@ const BuyerForm = () => {
             Submit your requirement details to receive fast verified supplier
             quotes.
           </p>
-          <Form className="grid grid-cols-3 w-full gap-4" onSubmit={onSubmit}>
+          <Form
+            className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+            onSubmit={onSubmit}
+          >
             <TextField
               isRequired
               name="requirementName"
               type="text"
-              className="col-span-3"
+              className="col-span-full"
             >
               <Label>Requirement/Product Name</Label>
               <Input placeholder="product name" />
@@ -178,7 +181,7 @@ const BuyerForm = () => {
               isRequired
               name="targetQuantity"
               type="number"
-              className="col-span-2"
+              className="col-span-1"
             >
               <Label>Target Quantity</Label>
               <Input placeholder="product name" />
@@ -200,7 +203,7 @@ const BuyerForm = () => {
               </Select.Popover>
             </Select>
             <TextField
-              className="w-full max-w-[280px]"
+              className="w-full"
               defaultValue="10"
               name="price"
               isRequired
@@ -213,7 +216,7 @@ const BuyerForm = () => {
               </InputGroup>
             </TextField>
             <TextField
-              className="w-full col-span-2"
+              className="w-full col-span-full sm:col-span-2"
               defaultValue="Chittagong, Bangladesh"
               name="DeliveryAddress"
               isRequired
@@ -226,13 +229,14 @@ const BuyerForm = () => {
                 <InputGroup.Input className="w-full max-w-full" />
               </InputGroup>
             </TextField>
-            <div className="flex flex-col gap-4 col-span-3 ">
+            <div className="col-span-full flex flex-col gap-4">
               <TextField isRequired>
                 <Label>Quality Tier</Label>
                 <RadioGroup
                   defaultValue="pro"
                   name="qualityTier"
                   orientation="horizontal"
+                  className="flex-wrap"
                   isRequired
                 >
                   <Radio
@@ -274,11 +278,7 @@ const BuyerForm = () => {
                 </RadioGroup>
               </TextField>
             </div>
-            <DatePicker
-              className="w-full col-span-1"
-              isRequired
-              name="targetDate"
-            >
+            <DatePicker className="w-full" isRequired name="targetDate">
               <Label>Target Date/Needed By</Label>
               <DateField.Group fullWidth>
                 <DateField.Input>
@@ -318,13 +318,17 @@ const BuyerForm = () => {
                 </Calendar>
               </DatePicker.Popover>
             </DatePicker>
-            <TextField name="attachmentLink" type="text" className="col-span-2">
+            <TextField
+              name="attachmentLink"
+              type="text"
+              className="col-span-full sm:col-span-2"
+            >
               <Label>Attachment Link</Label>
               <Input placeholder="Google Drive File link" />
               <FieldError />
             </TextField>
             <TextField
-              className="flex flex-col gap-2 col-span-3"
+              className="col-span-full flex flex-col gap-2"
               name="specifications"
             >
               <Label htmlFor="textarea-rows-6">Specifications</Label>
@@ -336,8 +340,11 @@ const BuyerForm = () => {
                 style={{ resize: "vertical" }}
               />
             </TextField>
-            <div className="flex gap-2">
-              <Button type="submit" className="rounded-lg bg-blue-900 px-10">
+            <div className="col-span-full flex gap-2">
+              <Button
+                type="submit"
+                className="w-full rounded-lg bg-blue-900 px-6 sm:w-auto sm:px-10"
+              >
                 Submit
                 <FaArrowRight />
               </Button>

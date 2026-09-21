@@ -47,9 +47,9 @@ const page = async ({ params }) => {
   const post = await getPostById(id);
 
   return (
-    <main className="min-h-screen bg-[#f3f3ef] px-4 py-8 text-slate-800 md:px-8">
+    <main className="min-h-screen min-w-0 overflow-x-hidden bg-[#f3f3ef] px-3 py-5 text-slate-800 sm:px-5 sm:py-8 md:px-8">
       <div className="mx-auto max-w-6xl rounded-[18px] border border-slate-200 bg-[#f9f9f7] shadow-[0_18px_45px_rgba(15,23,42,0.08)]">
-        <div className="border-b border-slate-200 px-6 py-6 md:px-8">
+        <div className="border-b border-slate-200 px-4 py-5 sm:px-6 sm:py-6 md:px-8">
           <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
             <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-slate-600">
               <span className="rounded bg-[#0f172a] px-2.5 py-1 text-[10px] font-semibold tracking-[0.12em] text-white">
@@ -67,12 +67,12 @@ const page = async ({ params }) => {
               </span>
             </div>
 
-            <div className="flex items-center gap-3">
-              <button className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50">
+            <div className="flex w-full flex-wrap gap-2 sm:w-auto sm:items-center sm:gap-3">
+              <button className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50 sm:flex-none">
                 <FiPrinter className="h-4 w-4" />
                 Print Summary
               </button>
-              <button className="inline-flex items-center gap-2 rounded-lg bg-[#0f172a] px-3 py-2 text-sm font-medium text-white transition hover:bg-slate-800">
+              <button className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-[#0f172a] px-3 py-2 text-sm font-medium text-white transition hover:bg-slate-800 sm:flex-none">
                 <FiShare2 className="h-4 w-4" />
                 Share Tracker
               </button>
@@ -80,7 +80,7 @@ const page = async ({ params }) => {
           </div>
 
           <div className="mt-5 flex flex-col gap-2">
-            <h1 className="text-3xl font-semibold tracking-[-0.04em] text-slate-900 md:text-[2.1rem]">
+            <h1 className="break-words text-2xl font-semibold tracking-[-0.04em] text-slate-900 sm:text-3xl md:text-[2.1rem]">
               {post.requirementName}
             </h1>
             <p className="text-base text-slate-500">{post.specifications}</p>
@@ -123,9 +123,9 @@ const page = async ({ params }) => {
           </div>
         </div>
 
-        <div className="px-6 py-6 md:px-8">
+        <div className="px-4 py-5 sm:px-6 sm:py-6 md:px-8">
           <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-            <div className="mb-4 flex items-center justify-between gap-3">
+            <div className="mb-4 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
               <div>
                 <h2 className="text-xl font-semibold text-slate-900">
                   Procurement Lifecycle Progress
