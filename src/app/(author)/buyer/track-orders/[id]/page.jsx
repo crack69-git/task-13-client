@@ -1,4 +1,6 @@
+import StatusWindow from "@/Components/BuyerSection/StatusWindow";
 import { getPostById } from "@/lib/actions/getData";
+import { ST } from "next/dist/shared/lib/utils";
 import React from "react";
 import {
   FiCheck,
@@ -54,7 +56,9 @@ const page = async ({ params }) => {
                 {post._id.slice(0, 8)}...
               </span>
               <span className="inline-flex items-center gap-1 rounded border border-slate-200 bg-white px-2 py-1">
-                <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                <span
+                  className={`h-2 w-2 rounded-full ${post.status === "approved" ? "bg-emerald-500" : "bg-yellow-500"}`}
+                />
                 STAGE 4 • {post.status.toUpperCase()}
               </span>
               <span className="inline-flex items-center gap-1 rounded border border-emerald-200 bg-emerald-50 px-2 py-1 text-emerald-700">
@@ -136,63 +140,7 @@ const page = async ({ params }) => {
               </span>
             </div>
 
-            <div className="relative mt-6">
-              <div className="absolute left-0 right-0 top-[18px] h-px bg-slate-200" />
-
-              <div className="grid gap-4 md:grid-cols-6">
-                {procurementSteps.map((item, index) => {
-                  const isActive = index === 3;
-                  const isDone = index < 3;
-                  const isFuture = index > 3;
-
-                  return (
-                    <div
-                      key={item.step}
-                      className="relative flex flex-col items-center text-center"
-                    >
-                      <div className="flex h-10 w-full items-center justify-center">
-                        <div
-                          className={`relative z-10 flex h-4 w-4 items-center justify-center rounded-full border-2 ${
-                            isActive
-                              ? "border-blue-500 bg-blue-500 shadow-[0_0_0_4px_rgba(59,130,246,0.12)]"
-                              : isDone
-                                ? "border-slate-900 bg-slate-900"
-                                : "border-slate-300 bg-slate-200"
-                          }`}
-                        >
-                          {isActive && (
-                            <div className="h-1.5 w-1.5 rounded-full bg-white" />
-                          )}
-                          {isDone && !isActive && (
-                            <FiCheck className="h-2.5 w-2.5 text-white" />
-                          )}
-                        </div>
-                      </div>
-
-                      <div
-                        className={`mt-2 w-full rounded-lg border px-2 py-2 text-left ${
-                          isActive
-                            ? "border-blue-200 bg-blue-50"
-                            : isDone
-                              ? "border-slate-200 bg-slate-100"
-                              : "border-slate-200 bg-white"
-                        }`}
-                      >
-                        <div className="mb-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
-                          {item.step}
-                        </div>
-                        <div className="text-sm font-medium text-slate-800">
-                          {item.title}
-                        </div>
-                        <div className="mt-1 text-[11px] text-slate-500">
-                          {item.status}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+            <StatusWindow delivaryStatus={post.delivaryStatus} />
           </div>
 
           <div className="mt-6 grid gap-6 lg:grid-cols-[1.6fr_0.9fr]">
@@ -311,7 +259,7 @@ const page = async ({ params }) => {
               </div>
             </div>
 
-            <div className="mt-6 rounded-xl border border-slate-200 bg-white p-5 shadow-sm col-span-2">
+            {/* <div className="mt-6 rounded-xl border border-slate-200 bg-white p-5 shadow-sm col-span-2">
               <div className="mb-4 flex items-center justify-between">
                 <h3 className="text-xl font-semibold text-slate-900">
                   Milestone & Audit Trail
@@ -330,9 +278,9 @@ const page = async ({ params }) => {
                   >
                     <div className="flex flex-col items-center">
                       <span className="mt-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-slate-900" />
-                      {/* {index < activities.length - 1 && (
+                      {index < activities.length - 1 && (
                       <span className="mt-2 h-8 w-px bg-slate-200" />
-                    )} */}
+                    )}
                     </div>
 
                     <div className="flex-1">
@@ -346,7 +294,7 @@ const page = async ({ params }) => {
                   </div>
                 ))}
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

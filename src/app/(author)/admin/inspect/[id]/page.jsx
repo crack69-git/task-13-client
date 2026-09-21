@@ -1,17 +1,13 @@
 import MultipleSelect from "@/Components/AdminSection/MultipleSelect";
 import SupplierModal from "@/Components/AdminSection/SupplierModal";
 import { getPostById, getSupplierById } from "@/lib/actions/getData";
-import { Button, Modal, Switch } from "@heroui/react";
+import { Switch } from "@heroui/react";
 import Link from "next/link";
 import React from "react";
-import { FaMailchimp, FaPaperclip } from "react-icons/fa6";
+import { FaPaperclip } from "react-icons/fa6";
 import {
-  FiArrowLeft,
-  FiCheck,
-  FiCheckCircle,
   FiChevronRight,
   FiFileText,
-  FiMail,
   FiPhone,
   FiRefreshCw,
   FiShield,

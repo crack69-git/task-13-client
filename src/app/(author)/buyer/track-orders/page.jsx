@@ -43,7 +43,7 @@ const page = async () => {
                 <Table.ColumnResizer />
               </Table.Column>
               <Table.Column defaultWidth="1fr" id="email" minWidth={200}>
-                Order Date
+                Order Deadline
               </Table.Column>
               <Table.Column defaultWidth="1fr" id="actions" minWidth={200}>
                 Actions
@@ -59,35 +59,24 @@ const page = async () => {
                     <Table.Cell>{order.requirementName}</Table.Cell>
                     <Table.Cell>
                       <Chip
-                        className={`${order.status === "active" ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800 border border-yellow-300"}`}
+                        className={`${order.status === "approved" ? "bg-green-100 text-green-800 border border-green-300" : "bg-yellow-100 text-yellow-800 border border-yellow-300"}`}
                         size="sm"
                         variant="soft"
                       >
-                        {order.status}
+                        {order.status.toUpperCase()}
                       </Chip>
                     </Table.Cell>
                     <Table.Cell>{order.targetDate}</Table.Cell>
                     <Table.Cell>
-                      {order.status === "Pending" ? (
+                      <Link href={`/buyer/track-orders/${order._id}`}>
                         <Button
                           variant="primary"
                           size="sm"
                           className="rounded-md bg-orange-600"
-                          isDisabled
                         >
                           View Details
                         </Button>
-                      ) : (
-                        <Link href={`/buyer/track-orders/${order._id}`}>
-                          <Button
-                            variant="primary"
-                            size="sm"
-                            className="rounded-md bg-orange-600"
-                          >
-                            View Details
-                          </Button>
-                        </Link>
-                      )}
+                      </Link>
                     </Table.Cell>
                   </Table.Row>
                 ))
