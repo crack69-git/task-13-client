@@ -6,6 +6,7 @@ export const getUserById = async (id) => {
       `${process.env.NEXT_PUBLIC_URL}/api/users/${id}`,
       {
         method: "GET",
+        cache: "no-store",
         headers: {
           "Content-Type": "application/json",
         },
@@ -25,6 +26,7 @@ export const getPosts = async (token) => {
       `${process.env.NEXT_PUBLIC_URL}/api/getPosts`,
       {
         method: "GET",
+        cache: "no-store",
         headers: {
           "Content-Type": "application/json",
           authorization: `Bearer ${token}`,
@@ -45,6 +47,7 @@ export const getPostById = async (id, token) => {
       `${process.env.NEXT_PUBLIC_URL}/api/getPosts/${id}`,
       {
         method: "GET",
+        cache: "no-store",
         headers: {
           "Content-Type": "application/json",
           authorization: `Bearer ${token}`,
@@ -65,6 +68,7 @@ export const getSupplierById = async (id, token) => {
       `${process.env.NEXT_PUBLIC_URL}/api/supplier/single/${id}`,
       {
         method: "GET",
+        cache: "no-store",
         headers: {
           "Content-Type": "application/json",
           authorization: `Bearer ${token}`,
