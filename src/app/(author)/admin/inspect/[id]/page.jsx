@@ -1,7 +1,9 @@
 import MultipleSelect from "@/Components/AdminSection/MultipleSelect";
 import SupplierModal from "@/Components/AdminSection/SupplierModal";
 import { getPostById, getSupplierById } from "@/lib/actions/getData";
+import { auth } from "@/lib/auth";
 import { Switch } from "@heroui/react";
+import { headers } from "next/headers";
 import Link from "next/link";
 
 import { FaPaperclip } from "react-icons/fa6";
@@ -33,10 +35,11 @@ const Detail = ({ label, children, className = "" }) => (
 
 const page = async ({ params }) => {
   const { id } = await params;
-  const data = await getPostById(id);
-  const supplier = await getSupplierById(id);
-  console.log(data);
-  console.log("supplier:", supplier);
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+  const data = await getPostById(id, token);
+  const supplier = await getSupplierById(id, token);
   return (
     <main className="min-h-screen min-w-0 overflow-x-hidden bg-[#f5f7f9] px-3 py-4 text-slate-900 sm:px-6 sm:py-5 lg:px-8">
       <div className="mx-auto max-w-295">
@@ -68,6 +71,7 @@ const page = async ({ params }) => {
             <MultipleSelect
               delivaryStatus={data.delivaryStatus}
               id={data._id}
+              token={token}
             />
           </div>
         </section>
@@ -196,7 +200,7 @@ const page = async ({ params }) => {
                 </Switch.Content>
               </Switch>
             </div>
-            <SupplierModal id={id} />
+            <SupplierModal id={id} token={token} />
           </section>
         </div>
 

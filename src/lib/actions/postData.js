@@ -1,6 +1,6 @@
 "use server";
 
-export const postRequirements = async (data) => {
+export const postRequirements = async (data, token) => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_URL}/api/requirements`,
@@ -8,6 +8,7 @@ export const postRequirements = async (data) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
       },
@@ -23,7 +24,7 @@ export const postRequirements = async (data) => {
   }
 };
 
-export const postSupplier = async (data) => {
+export const postSupplier = async (data, token) => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_URL}/api/supplier`,
@@ -31,6 +32,7 @@ export const postSupplier = async (data) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
       },

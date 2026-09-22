@@ -14,7 +14,7 @@ import { useState } from "react";
 
 import { FaMailchimp } from "react-icons/fa6";
 
-const SupplierModal = ({ id }) => {
+const SupplierModal = ({ id, token }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const onSubmit = async (e) => {
@@ -29,7 +29,7 @@ const SupplierModal = ({ id }) => {
       supplierContact: data.supplierContact,
       supplierPrice: data.supplierPrice,
     };
-    const res = await postSupplier(supplier);
+    const res = await postSupplier(supplier, token);
     console.log(res);
     if (res.acknowledged) {
       alert("Supplier added successfully");

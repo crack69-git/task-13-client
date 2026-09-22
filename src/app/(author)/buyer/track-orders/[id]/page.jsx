@@ -1,6 +1,8 @@
 import StatusWindow from "@/Components/BuyerSection/StatusWindow";
 import { getPostById } from "@/lib/actions/getData";
+import { auth } from "@/lib/auth";
 import { ST } from "next/dist/shared/lib/utils";
+import { headers } from "next/headers";
 
 import {
   FiCheck,
@@ -47,7 +49,10 @@ export const metadata = {
 const page = async ({ params }) => {
   const { id } = await params;
   console.log("Order ID:", id);
-  const post = await getPostById(id);
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+  const post = await getPostById(id, token);
 
   return (
     <main className="min-h-screen min-w-0 overflow-x-hidden bg-[#f3f3ef] px-3 py-5 text-slate-800 sm:px-5 sm:py-8 md:px-8">

@@ -4,10 +4,10 @@ import { Button } from "@heroui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-const InspectButton = ({ status, id }) => {
+const InspectButton = ({ status, id, token }) => {
   const router = useRouter();
   const handleApprove = async (id) => {
-    const res = await patchPostStatus(id, "approved");
+    const res = await patchPostStatus(id, "approved", token);
     console.log("Status updated:", res);
     if (res.modifiedCount > 0) {
       alert("Request approved successfully!");

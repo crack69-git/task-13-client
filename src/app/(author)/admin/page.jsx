@@ -1,5 +1,8 @@
 import AdminTable from "@/Components/AdminSection/AdminTable";
+import { getPosts } from "@/lib/actions/getData";
+import { auth } from "@/lib/auth";
 import { Card } from "@heroui/react";
+import { headers } from "next/headers";
 
 import { BiTask } from "react-icons/bi";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
@@ -9,7 +12,21 @@ export const metadata = {
   title: "SourceX-Admin",
   description: "Admin page for SourceX",
 };
-const page = () => {
+const page = async () => {
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+  const totalRequests = await getPosts(token);
+  const pendingRequests = totalRequests.filter(
+    (request) => request.status === "pending",
+  );
+  const verifiedRequests = totalRequests.filter(
+    (request) => request.status === "approved",
+  );
+  const completedRequests = totalRequests.filter(
+    (request) => request.status === "completed",
+  );
+
   return (
     <div className="mx-auto w-full max-w-[1440px] px-3 py-4 sm:px-5 sm:py-5 lg:px-8">
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4 xl:gap-4">
@@ -23,7 +40,9 @@ const page = () => {
             </Card.Title>
           </Card.Header>
           <Card.Content>
-            <p className="text-4xl font-bold text-gray-600">142</p>
+            <p className="text-4xl font-bold text-gray-600">
+              {totalRequests.length}
+            </p>
           </Card.Content>
         </Card>
         <Card className="w-full" variant="default">
@@ -36,7 +55,9 @@ const page = () => {
             </Card.Title>
           </Card.Header>
           <Card.Content>
-            <p className="text-4xl font-bold text-gray-600">15</p>
+            <p className="text-4xl font-bold text-gray-600">
+              {pendingRequests.length}
+            </p>
           </Card.Content>
         </Card>
         <Card className="w-full" variant="default">
@@ -49,7 +70,9 @@ const page = () => {
             </Card.Title>
           </Card.Header>
           <Card.Content>
-            <p className="text-4xl font-bold text-gray-600">116</p>
+            <p className="text-4xl font-bold text-gray-600">
+              {verifiedRequests.length}
+            </p>
           </Card.Content>
         </Card>
         <Card className="w-full" variant="default">
@@ -62,7 +85,9 @@ const page = () => {
             </Card.Title>
           </Card.Header>
           <Card.Content>
-            <p className="text-4xl font-bold text-gray-600">15</p>
+            <p className="text-4xl font-bold text-gray-600">
+              {completedRequests.length}
+            </p>
           </Card.Content>
         </Card>
       </div>

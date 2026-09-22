@@ -1,5 +1,7 @@
 import { getPosts } from "@/lib/actions/getData";
+import { auth } from "@/lib/auth";
 import { Button, Chip, Table } from "@heroui/react";
+import { headers } from "next/headers";
 import Link from "next/link";
 
 import { FaTruckMoving } from "react-icons/fa6";
@@ -8,7 +10,10 @@ export const metadata = {
   description: "Tracking orders for SourceX",
 };
 const page = async () => {
-  const orders = await getPosts();
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+  const orders = await getPosts(token);
   console.log("Orders:", orders);
   return (
     <div className="mx-auto w-full max-w-7xl px-3 py-6 sm:px-6 sm:py-10 lg:px-8">
@@ -67,7 +72,7 @@ const page = async () => {
                           size="sm"
                           variant="soft"
                         >
-                          {order.status.toUpperCase()}
+                          {order.status}
                         </Chip>
                       </Table.Cell>
                       <Table.Cell>{order.targetDate}</Table.Cell>

@@ -1,5 +1,6 @@
 "use client";
-import { patchDelivaryStatus } from "@/lib/actions/patchData";
+import { getPostById } from "@/lib/actions/getData";
+import { patchDelivaryStatus, patchPostStatus } from "@/lib/actions/patchData";
 import {
   Checkbox,
   CheckboxGroup,
@@ -12,7 +13,7 @@ import { Icon } from "@iconify/react";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-const MultipleSelect = ({ delivaryStatus, id }) => {
+const MultipleSelect = ({ delivaryStatus, id, token }) => {
   const deliveryOptions = [
     {
       title: "Searching",
@@ -49,10 +50,18 @@ const MultipleSelect = ({ delivaryStatus, id }) => {
 
     // 3. Send the updated state directly to the server action/API
     try {
-      const res = await patchDelivaryStatus(id, updatedStage);
+      const res = await patchDelivaryStatus(id, updatedStage, token);
 
       if (res.modifiedCount > 0) {
-        alert("Delivery status updated successfully!");
+        // alert("Delivery status updated successfully!");
+        const postData = await getPostById(id, token);
+        if (postData?.delivaryStatus.length === 5) {
+          alert("Delivery status updated successfully! All stages completed.");
+          const updatedPostData = await patchPostStatus(id, "completed", token);
+        } else {
+          const updatedPostData = await patchPostStatus(id, "pending", token);
+        }
+
         router.refresh();
       } else {
         alert("Failed to update delivery status. Please try again.");

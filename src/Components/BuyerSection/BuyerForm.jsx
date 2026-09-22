@@ -28,10 +28,10 @@ import {
   FaSquareArrowUpRight,
 } from "react-icons/fa6";
 
-const BuyerForm = () => {
+const BuyerForm = ({ token }) => {
+  console.log("token:", token);
   const router = useRouter();
-  const { data: session } = authClient.useSession();
-
+  const session = authClient.getSession();
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -52,7 +52,7 @@ const BuyerForm = () => {
       status: "pending",
       delivaryStatus: ["searching"],
     };
-    const res = await postRequirements(requiremntsData);
+    const res = await postRequirements(requiremntsData, token);
     if (res.acknowledged) {
       alert("Requirement submitted successfully!");
       router.push("/buyer/track-orders");

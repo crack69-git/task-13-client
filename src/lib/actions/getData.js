@@ -19,7 +19,7 @@ export const getUserById = async (id) => {
   }
 };
 
-export const getPosts = async () => {
+export const getPosts = async (token) => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_URL}/api/getPosts`,
@@ -27,6 +27,7 @@ export const getPosts = async () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
       },
     );
@@ -38,7 +39,7 @@ export const getPosts = async () => {
   }
 };
 
-export const getPostById = async (id) => {
+export const getPostById = async (id, token) => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_URL}/api/getPosts/${id}`,
@@ -46,6 +47,7 @@ export const getPostById = async (id) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
       },
     );
@@ -57,7 +59,7 @@ export const getPostById = async (id) => {
   }
 };
 
-export const getSupplierById = async (id) => {
+export const getSupplierById = async (id, token) => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_URL}/api/supplier/single/${id}`,
@@ -65,6 +67,7 @@ export const getSupplierById = async (id) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
       },
     );

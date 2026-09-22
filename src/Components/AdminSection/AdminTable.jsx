@@ -3,9 +3,14 @@ import { Button, Chip, Table } from "@heroui/react";
 import Link from "next/link";
 
 import InspectButton from "./InspectButton";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 const AdminTable = async () => {
-  const data = await getPosts();
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+  const data = await getPosts(token);
   console.log(data);
   return (
     <div className="mt-5">
@@ -34,13 +39,18 @@ const AdminTable = async () => {
                   <Table.Cell>
                     <Chip
                       variant="flat"
-                      className={`${item.status === "pending" ? "bg-yellow-100 text-yellow-600 border border-yellow-300" : "bg-green-100 text-green-600 border border-green-600"}`}
+                      className={`${item.status === "pending" ? "bg-yellow-100 text-yellow-600 border border-yellow-300" : item.status === "approved" ? "bg-green-100 text-green-600 border border-green-600" : "bg-purple-100 text-purple-600 border border-purple-300"}`}
                     >
-                      {item.status.toUpperCase()}
+                      {(item?.status || "unknown").toUpperCase()}
                     </Chip>
+                    .
                   </Table.Cell>
                   <Table.Cell>
-                    <InspectButton status={item.status} id={item._id} />
+                    <InspectButton
+                      status={item.status}
+                      id={item._id}
+                      token={token}
+                    />
                   </Table.Cell>
                 </Table.Row>
               ))}

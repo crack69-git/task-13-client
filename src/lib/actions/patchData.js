@@ -1,6 +1,6 @@
 "use server";
 
-export const patchPostStatus = async (id, status) => {
+export const patchPostStatus = async (id, status, token) => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_URL}/api/updatePostStatus/${id}`,
@@ -8,6 +8,7 @@ export const patchPostStatus = async (id, status) => {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ status }),
       },
@@ -20,7 +21,7 @@ export const patchPostStatus = async (id, status) => {
   }
 };
 
-export const patchDelivaryStatus = async (id, delivaryStatus) => {
+export const patchDelivaryStatus = async (id, delivaryStatus, token) => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_URL}/api/updateDeliveryStatus/${id}`,
@@ -28,6 +29,7 @@ export const patchDelivaryStatus = async (id, delivaryStatus) => {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ delivaryStatus }),
       },
