@@ -68,11 +68,11 @@ const page = async () => {
                       <Table.Cell>{order.requirementName}</Table.Cell>
                       <Table.Cell>
                         <Chip
-                          className={`${order.status === "approved" ? "bg-green-100 text-green-800 border border-green-300" : "bg-yellow-100 text-yellow-800 border border-yellow-300"}`}
+                          className={`${order.status === "approved" ? "bg-green-100 text-green-800 border border-green-300" : order.status === "pending" ? "bg-yellow-100 text-yellow-800 border border-yellow-300" : "bg-purple-100 text-purple-800 border border-purple-300"}`}
                           size="sm"
                           variant="soft"
                         >
-                          {order.status}
+                          {(order?.status || "unknown").toUpperCase()}
                         </Chip>
                       </Table.Cell>
                       <Table.Cell>{order.targetDate}</Table.Cell>
