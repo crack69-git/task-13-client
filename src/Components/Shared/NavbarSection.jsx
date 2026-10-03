@@ -9,15 +9,16 @@ import { getUserById } from "@/lib/actions/getData";
 import LogoutButtonSection from "./LogoutButtonSection";
 import NavLink from "./NavLink";
 import { GiRadarDish } from "react-icons/gi";
+import { FaHome } from "react-icons/fa";
 
 export default async function NavbarSection() {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
   const user = session?.user;
-  console.log("Current user session:", user.id);
+
   const users = await getUserById(user?.id); // Fetch user data using the getUserById function
-  console.log("Fetched user data:", users);
+
   return (
     <div className="w-full  flex justify-center">
       <div className="mx-auto flex w-full flex-wrap items-center justify-between gap-3 border border-gray-200/80 bg-white px-3 py-3 shadow-sm sm:px-4 sm:py-4">
@@ -28,27 +29,33 @@ export default async function NavbarSection() {
               X
             </span>
           </div>
-          <div className="flex flex-col">
-            <div className="flex items-center gap-1.5">
-              <span className="font-extrabold text-sm leading-none tracking-wider text-slate-900 sm:text-lg">
-                SOURCE<span className="text-cyan-500">·</span>X
+          <Link href="/" className="flex items-center gap-1.5">
+            <div className="flex flex-col">
+              <div className="flex items-center gap-1.5">
+                <span className="font-extrabold text-sm leading-none tracking-wider text-slate-900 sm:text-lg">
+                  SOURCE<span className="text-cyan-500">·</span>X
+                </span>
+                <Chip
+                  size="sm"
+                  variant="flat"
+                  className="bg-slate-100 text-slate-600 font-semibold text-[10px] h-5 px-1 rounded-md"
+                >
+                  <span className="hidden sm:inline">B2B</span>
+                </Chip>
+              </div>
+              <span className="mt-0.5 hidden text-[11px] font-medium tracking-tight text-slate-400 sm:block">
+                Sourcing Platform
               </span>
-              <Chip
-                size="sm"
-                variant="flat"
-                className="bg-slate-100 text-slate-600 font-semibold text-[10px] h-5 px-1 rounded-md"
-              >
-                <span className="hidden sm:inline">B2B</span>
-              </Chip>
             </div>
-            <span className="mt-0.5 hidden text-[11px] font-medium tracking-tight text-slate-400 sm:block">
-              Sourcing Platform
-            </span>
-          </div>
+          </Link>
         </div>
 
         {/* Navigation Links */}
         <div className="order-3 flex w-full items-center justify-center gap-3 border-t border-slate-100 pt-2 md:order-0 md:w-auto md:border-0 md:pt-0 md:gap-5">
+          <NavLink href="/">
+            <FaHome />
+            <span>Home</span>
+          </NavLink>
           <NavLink href="/buyer">
             <HiOutlineNewspaper />
             <span> New Request</span>

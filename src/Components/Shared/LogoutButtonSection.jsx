@@ -13,7 +13,7 @@ const LogoutButtonSection = () => {
         await authClient.signOut({
           fetchOptions: {
             onSuccess: () => {
-              router.push("/");
+              router.push("/login");
             },
           },
         });
