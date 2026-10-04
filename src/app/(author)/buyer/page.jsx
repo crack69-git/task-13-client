@@ -1,6 +1,5 @@
 import BuyerForm from "@/Components/BuyerSection/BuyerForm";
 import { auth } from "@/lib/auth";
-import { authClient } from "@/lib/auth-client";
 import { headers } from "next/headers";
 export const metadata = {
   title: "SourceX-Buyer Dashboard",

@@ -4,6 +4,7 @@ import Features from "@/Components/Homepage/FeatureSection";
 import HeroSection from "@/Components/Homepage/HeroSection";
 import HowItWorks from "@/Components/Homepage/HowItWorkSection";
 import SupplierSection from "@/Components/Homepage/SupplierSection";
+import Testimonials from "@/Components/Homepage/Testimonials";
 import ValueSection from "@/Components/Homepage/ValueSection";
 import React from "react";
 
@@ -11,7 +12,8 @@ const page = () => {
   return (
     <div>
       <HeroSection />
-      <BusinessStrip />
+      <Testimonials />
+      {/* <BusinessStrip /> */}
       <ValueSection />
       <HowItWorks />
       <Features />
