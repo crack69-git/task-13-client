@@ -26,7 +26,7 @@ const page = async () => {
           </p>
         </div>
       </div>
-      <div className="w-full overflow-x-auto rounded-lg border border-slate-200 bg-white">
+      <div className="w-full overflow-x-auto rounded-lg Shadow-sm bg-white">
         <Table>
           <Table.ResizableContainer>
             <Table.Content
