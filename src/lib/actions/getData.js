@@ -82,3 +82,23 @@ export const getSupplierById = async (id, token) => {
     throw error;
   }
 };
+
+export const getProducts = async () => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/get/products`,
+      {
+        method: "GET",
+        cache: "no-store",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    throw error;
+  }
+};

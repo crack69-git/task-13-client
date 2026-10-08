@@ -78,7 +78,7 @@ export default async function NavbarSection() {
           {/* User Profile */}
           <div className="flex items-center gap-2.5 pl-1">
             <div>
-              {users?.image ? (
+              {/* {users?.image ? (
                 <Image
                   loading="lazy"
                   src={users?.image}
@@ -91,7 +91,7 @@ export default async function NavbarSection() {
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-200 text-xs font-semibold text-slate-700">
                   {users?.name?.charAt(0)?.toUpperCase() || "U"}
                 </div>
-              )}
+              )} */}
             </div>
             <div className="hidden sm:flex flex-col text-left">
               <span className="text-xs font-semibold text-slate-900 leading-tight">

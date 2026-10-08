@@ -77,7 +77,7 @@ const TestimonialCard = ({ item }) => {
         “{item.quote}”
       </p>
 
-      {/* Divider */}
+      {/* Separator */}
       <div className="my-5 h-px bg-gray-100" />
 
       {/* User */}

@@ -29,6 +29,12 @@ const SidebarSection = async () => {
               Post Products
             </Button>
           </NavLink>
+          <NavLink href="/admin/all-products">
+            <Button variant="" className="">
+              <MdProductionQuantityLimits />
+              All Products
+            </Button>
+          </NavLink>
         </div>
         <div className="mx-auto mt-4 flex items-center gap-2">
           <LogoutButtonSection />

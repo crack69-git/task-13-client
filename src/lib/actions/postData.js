@@ -47,3 +47,27 @@ export const postSupplier = async (data, token) => {
     throw error;
   }
 };
+
+export const postProduct = async (data) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/post/product`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      },
+    );
+    if (!response.ok) {
+      throw new Error("Failed to post product");
+    }
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Error posting product:", error);
+    throw error;
+  }
+};
