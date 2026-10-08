@@ -1,9 +1,10 @@
 import { Button, Separator } from "@heroui/react";
 import Link from "next/link";
 
-import { MdDashboard } from "react-icons/md";
+import { MdDashboard, MdProductionQuantityLimits } from "react-icons/md";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import LogoutButtonSection from "../Shared/LogoutButtonSection";
+import NavLink from "../Shared/NavLink";
 
 const SidebarSection = async () => {
   return (
@@ -16,21 +17,18 @@ const SidebarSection = async () => {
           <Separator className="my-4" />
         </div>
         <div className="grid flex-1 grid-cols-3 gap-2 lg:block">
-          <Link href="/admin">
-            <Button
-              variant="primary"
-              className="mt-0 w-full rounded-lg bg-green-950 lg:mt-4"
-            >
+          <NavLink href="/admin">
+            <Button variant="">
               <MdDashboard />
               Dashboard
             </Button>
-          </Link>
-          <Button variant="ghost" className="mt-0 w-full rounded-lg lg:mt-2">
-            Users
-          </Button>
-          <Button variant="ghost" className="mt-0 w-full rounded-lg lg:mt-2">
-            Settings
-          </Button>
+          </NavLink>
+          <NavLink href="/admin/post-product">
+            <Button variant="" className="">
+              <MdProductionQuantityLimits />
+              Post Products
+            </Button>
+          </NavLink>
         </div>
         <div className="mx-auto mt-4 flex items-center gap-2">
           <LogoutButtonSection />

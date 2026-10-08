@@ -56,13 +56,17 @@ export default async function NavbarSection() {
             <FaHome />
             <span>Home</span>
           </NavLink>
+          <NavLink href="/buyer/products">
+            <HiOutlineNewspaper />
+            <span>Available Products</span>
+          </NavLink>
           <NavLink href="/buyer">
             <HiOutlineNewspaper />
-            <span> New Request</span>
+            <span>Request Product</span>
           </NavLink>
           <NavLink href="/buyer/track-orders">
             <GiRadarDish />
-            Track Order
+            <span>Track Order</span>
           </NavLink>
         </div>
 
