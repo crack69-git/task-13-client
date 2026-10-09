@@ -124,9 +124,13 @@ const Page = () => {
     const formData = new FormData(form);
 
     const data = Object.fromEntries(formData.entries());
+    const products = {
+      ...data,
+      createdAt: new Date().toISOString(),
+    };
 
-    console.log("Product Data:", data);
-    const res = await postProduct(data);
+    console.log("Product Data:", products);
+    const res = await postProduct(products);
     console.log("Product posted successfully:", res);
     if (res.success) {
       alert("Product posted successfully!");

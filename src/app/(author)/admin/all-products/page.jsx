@@ -359,20 +359,23 @@ const ProductCard = ({ product }) => {
         ================================================== */}
 
         <div className="mt-5 flex gap-2">
-          <Button
-            size="sm"
-            variant="flat"
-            className="
+          <Link href={`/admin/all-products/${product.productCode}`}>
+            <Button
+              size="sm"
+              variant="flat"
+              className="
+              
               flex-1
               bg-[#EAF8FD]
               font-semibold
               text-[#007EA8]
               hover:bg-[#D9F3FC]
             "
-          >
-            <FaEye />
-            View
-          </Button>
+            >
+              <FaEye />
+              View
+            </Button>
+          </Link>
 
           <Button
             size="sm"

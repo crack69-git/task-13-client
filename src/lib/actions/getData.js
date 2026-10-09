@@ -102,3 +102,23 @@ export const getProducts = async () => {
     throw error;
   }
 };
+
+export const getSingleProduct = async (id) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/get/product/${id}`,
+      {
+        method: "GET",
+        cache: "no-store",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching single product:", error);
+    throw error;
+  }
+};
