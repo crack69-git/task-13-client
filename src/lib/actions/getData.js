@@ -124,6 +124,7 @@ export const getProducts = async ({ name = "", category = "" } = {}) => {
 
 export const getSingleProduct = async (id) => {
   try {
+    console.log("Fetching single product with ID:", id);
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_URL}/api/get/product/${id}`,
       {
