@@ -550,15 +550,6 @@ const page = async ({ params }) => {
               <div className="space-y-5 p-5">
                 <div>
                   <p className="text-xs font-medium text-gray-400">
-                    MongoDB ID
-                  </p>
-                  <p className="mt-1.5 break-all font-mono text-xs font-semibold text-[#203750]">
-                    {showValue(product._id?.toString?.() ?? product._id)}
-                  </p>
-                </div>
-
-                <div>
-                  <p className="text-xs font-medium text-gray-400">
                     Created Date
                   </p>
                   <p className="mt-1.5 text-sm font-semibold text-[#203750]">

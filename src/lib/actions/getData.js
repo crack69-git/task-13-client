@@ -83,20 +83,39 @@ export const getSupplierById = async (id, token) => {
   }
 };
 
-export const getProducts = async () => {
+export const getProducts = async ({ name = "", category = "" } = {}) => {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/api/get/products`,
-      {
-        method: "GET",
-        cache: "no-store",
-        headers: {
-          "Content-Type": "application/json",
-        },
+    const params = new URLSearchParams();
+
+    if (name.trim()) {
+      params.set("name", name.trim());
+    }
+
+    if (category.trim() && category !== "all") {
+      params.set("category", category.trim());
+    }
+
+    const queryString = params.toString();
+
+    const url = `${process.env.NEXT_PUBLIC_URL}/api/get/products${
+      queryString ? `?${queryString}` : ""
+    }`;
+
+    const response = await fetch(url, {
+      method: "GET",
+      cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch products: ${response.status}`);
+    }
+
     const data = await response.json();
-    return data;
+
+    return Array.isArray(data) ? data : [];
   } catch (error) {
     console.error("Error fetching products:", error);
     throw error;
