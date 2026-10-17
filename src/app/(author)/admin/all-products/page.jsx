@@ -17,6 +17,7 @@ import {
 
 import { getProducts } from "@/lib/actions/getData";
 import ProductOverviewChart from "@/Components/AdminSection/ProductOverviewChart";
+import ProductDelete from "@/Components/AdminSection/ProductDelete";
 
 export const metadata = {
   title: "SourceX | All Products",
@@ -197,15 +198,7 @@ function ProductCard({ product }) {
             Edit
           </Button>
 
-          <Button
-            size="sm"
-            isIconOnly
-            variant="flat"
-            aria-label={`Delete ${product.productName}`}
-            className="bg-[#FFF1EE] text-[#E74C27] hover:bg-[#FFE5DF]"
-          >
-            <FaTrash />
-          </Button>
+          <ProductDelete product={product}></ProductDelete>
         </div>
       </div>
     </Card>
