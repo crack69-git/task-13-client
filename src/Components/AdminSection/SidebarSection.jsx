@@ -13,6 +13,7 @@ import { RiLogoutBoxRLine } from "react-icons/ri";
 
 import LogoutButtonSection from "../Shared/LogoutButtonSection";
 import NavLink from "../Shared/NavLink";
+import { FaProductHunt } from "react-icons/fa6";
 
 const SidebarSection = async () => {
   return (
@@ -67,6 +68,12 @@ const SidebarSection = async () => {
             <Button variant="light">
               <MdInventory2 size={21} className="shrink-0" />
               <span>All Products</span>
+            </Button>
+          </NavLink>
+          <NavLink href="/admin/requested-products">
+            <Button variant="light">
+              <FaProductHunt size={21} className="shrink-0" />
+              <span>Requested Products</span>
             </Button>
           </NavLink>
         </nav>

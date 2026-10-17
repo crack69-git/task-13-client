@@ -17,21 +17,28 @@ const InspectButton = ({ status, id, token }) => {
       return;
     }
   };
-  return status === "pending" ? (
-    <Button
-      onClick={() => handleApprove(id)}
-      className="rounded-lg"
-      size="sm"
-      variant="primary"
-    >
-      Approve
-    </Button>
-  ) : (
-    <Link href={`/admin/inspect/${id}`}>
-      <Button className="rounded-lg" size="sm" variant="secondary">
-        Inspect
+  return (
+    <div className="flex gap-2 justify-end">
+      {status === "pending" ? (
+        <Button
+          onClick={() => handleApprove(id)}
+          className="rounded-lg"
+          size="sm"
+          variant="primary"
+        >
+          Approve
+        </Button>
+      ) : (
+        <Link href={`/admin/inspect/${id}`}>
+          <Button className="rounded-lg" size="sm" variant="secondary">
+            Inspect
+          </Button>
+        </Link>
+      )}
+      <Button variant="danger" className="rounded-lg">
+        Delete
       </Button>
-    </Link>
+    </div>
   );
 };
 
