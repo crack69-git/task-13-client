@@ -6,19 +6,37 @@ import HowItWorks from "@/Components/Homepage/HowItWorkSection";
 import SupplierSection from "@/Components/Homepage/SupplierSection";
 import Testimonials from "@/Components/Homepage/Testimonials";
 import ValueSection from "@/Components/Homepage/ValueSection";
+import { Fab } from "@mui/material";
 import React from "react";
+import { FaPlus } from "react-icons/fa6";
 
 const page = () => {
   return (
-    <div>
-      <HeroSection />
-      <Testimonials />
-      {/* <BusinessStrip /> */}
-      <ValueSection />
-      <HowItWorks />
-      <Features />
-      <SupplierSection />
-      <CTA />
+    <div className="relative">
+      <Fab
+        size="medium"
+        color="secondary"
+        aria-label="add"
+        sx={{
+          position: "fixed",
+          right: 24,
+          bottom: 24,
+          zIndex: 1400,
+        }}
+      >
+        <FaPlus />
+      </Fab>
+
+      <div>
+        <HeroSection />
+        <Testimonials />
+        {/* <BusinessStrip /> */}
+        <ValueSection />
+        <HowItWorks />
+        <Features />
+        <SupplierSection />
+        <CTA />
+      </div>
     </div>
   );
 };

@@ -73,7 +73,13 @@ const SidebarSection = async () => {
           <NavLink href="/admin/requested-products">
             <Button variant="light">
               <FaProductHunt size={21} className="shrink-0" />
-              <span>Requested Products</span>
+              <span>Requested</span>
+            </Button>
+          </NavLink>
+          <NavLink href="/admin/ordered-products">
+            <Button variant="light">
+              <FaProductHunt size={21} className="shrink-0" />
+              <span>Ordered Products</span>
             </Button>
           </NavLink>
         </nav>

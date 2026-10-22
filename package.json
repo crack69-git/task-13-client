@@ -10,9 +10,12 @@
   },
   "dependencies": {
     "@better-auth/mongo-adapter": "^1.7.5",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@heroui/react": "^3.2.5",
     "@heroui/styles": "^3.2.5",
     "@iconify/react": "^6.0.2",
+    "@mui/material": "^9.5.0",
     "better-auth": "^1.7.5",
     "framer-motion": "^13.4.0",
     "jsonwebtoken": "^9.0.3",

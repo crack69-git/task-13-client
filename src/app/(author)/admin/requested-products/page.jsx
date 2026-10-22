@@ -219,11 +219,6 @@ export default async function RequestedProductsPage() {
           />
         </section>
 
-        {/* Charts */}
-        <section className="mb-7">
-          <RequestCharts />
-        </section>
-
         {/* Requested products table */}
         <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
           <div className="border-b border-slate-100 p-5 sm:p-6">

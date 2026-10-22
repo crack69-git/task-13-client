@@ -19,3 +19,23 @@ export const deleteProduct = async (id) => {
     throw error;
   }
 };
+
+export const deletePost = async (id) => {
+  try {
+    console.log("Deleting post with ID:", typeof id);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/delete/post/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    throw error;
+  }
+};

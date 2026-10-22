@@ -142,3 +142,23 @@ export const getSingleProduct = async (id) => {
     throw error;
   }
 };
+
+export const getAllProducts = async () => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/all/getProducts`,
+      {
+        method: "GET",
+        cache: "no-store",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching all posts:", error);
+    throw error;
+  }
+};
