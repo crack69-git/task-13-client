@@ -4,11 +4,16 @@ import Image from "next/image";
 import { FiArrowLeft, FiMapPin, FiPackage, FiShield } from "react-icons/fi";
 import ProductPurchaseActions from "@/Components/BuyerSection/ProductPurchaseActions";
 import { getSingleProduct } from "@/lib/actions/getData";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 // import ProductPurchaseActions from "@/components/Buyer/ProductPurchaseActions";
 
 const Page = async ({ params }) => {
   const { id } = await params;
-  console.log("Product ID:", id);
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
   const res = await getSingleProduct(id);
   const product = res?.product ?? res?.data ?? res;
 
@@ -200,8 +205,9 @@ const Page = async ({ params }) => {
 
               {/* Purchase Actions */}
               <ProductPurchaseActions
-              // product={cartProduct}
-              // disabled={!available}
+                product={cartProduct}
+                user={session?.user}
+                // disabled={!available}
               />
 
               <div className="mt-5 flex items-start gap-2 rounded-xl bg-[#F5FAFD] p-3">

@@ -71,3 +71,24 @@ export const postProduct = async (data) => {
     throw error;
   }
 };
+
+export const postCart = async (data) => {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/cart`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      throw new Error("Failed to post cart");
+    }
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Error posting cart:", error);
+    throw error;
+  }
+};

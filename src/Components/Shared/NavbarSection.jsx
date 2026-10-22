@@ -10,6 +10,7 @@ import LogoutButtonSection from "./LogoutButtonSection";
 import NavLink from "./NavLink";
 import { GiRadarDish } from "react-icons/gi";
 import { FaHome } from "react-icons/fa";
+import { FaCartArrowDown } from "react-icons/fa6";
 
 export default async function NavbarSection() {
   const session = await auth.api.getSession({
@@ -72,6 +73,7 @@ export default async function NavbarSection() {
 
         {/* Search & Actions */}
         <div className="flex items-center justify-end gap-3">
+          <FaCartArrowDown />
           <LogoutButtonSection />
           <div className="hidden h-5 w-px bg-slate-200 sm:block" />
 
