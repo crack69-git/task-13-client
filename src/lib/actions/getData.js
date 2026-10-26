@@ -162,3 +162,20 @@ export const getAllProducts = async () => {
     throw error;
   }
 };
+
+export const getOrders = async () => {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/orders`, {
+      method: "GET",
+      cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    throw error;
+  }
+};

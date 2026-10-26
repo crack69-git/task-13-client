@@ -1,6 +1,6 @@
 "use client";
 
-import { postCart } from "@/lib/actions/postData";
+import { postCart, postOrder } from "@/lib/actions/postData";
 import {
   Button,
   FieldError,
@@ -18,23 +18,7 @@ import { FaCartPlus } from "react-icons/fa6";
 import { FiPackage, FiShoppingBag } from "react-icons/fi";
 
 const ProductPurchaseActions = ({ product, user }) => {
-  const minimumQuantity = Number(product?.minimumOrderQuantity) || 1;
-  const availableQuantity = Number(product?.availableQuantity) || 0;
-  const unitPrice = Number(product?.unitPrice) || 0;
-  const currency = product?.currency || "BDT";
-
-  const [quantity, setQuantity] = useState(minimumQuantity);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const subtotal = unitPrice * quantity;
-
-  const formatPrice = (amount) =>
-    new Intl.NumberFormat("en-BD", {
-      style: "currency",
-      currency,
-      maximumFractionDigits: 2,
-    }).format(Number(amount) || 0);
-
+  console.log("ProductPurchaseActions props:", { product, user });
   const handleAddToCart = async () => {
     try {
       const res = await postCart({
@@ -57,57 +41,35 @@ const ProductPurchaseActions = ({ product, user }) => {
     }
   };
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
+  const [quantity, setQuantity] = useState(product?.minimumOrderQuantity);
+  const [totalPrice, setTotalPrice] = useState(
+    product?.unitPrice * product?.minimumOrderQuantity,
+  );
+  const unitPrice = product?.unitPrice || 0;
+  const onChangeQuantity = (e) => {
+    let subtotal = e * product?.unitPrice;
+    setTotalPrice(subtotal);
+    setQuantity(e);
+  };
 
-    const form = event.currentTarget;
+  const onSubmit = async (e) => {
+    e.preventDefault();
 
-    if (!form.reportValidity()) return;
-
-    const formData = new FormData(form);
+    const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
-
-    const orderedQuantity = Number(data.quantity);
-
-    if (
-      !Number.isInteger(orderedQuantity) ||
-      orderedQuantity < minimumQuantity
-    ) {
-      alert(`Minimum order quantity is ${minimumQuantity}.`);
-      return;
-    }
-
-    if (orderedQuantity > availableQuantity) {
-      alert("The requested quantity exceeds available stock.");
-      return;
-    }
-
-    const orderData = {
+    const finalData = {
+      ...product,
       ...data,
-      productId: product.id,
-      productName: product.productName,
-      supplier: product.supplierCompany,
-      userId: user?.id,
-      quantity: orderedQuantity,
-      unitPrice,
-      currency,
-      subtotal: unitPrice * orderedQuantity,
-      unitOfMeasure: product.unitOfMeasure,
+      totalPrice: totalPrice,
+      status: "On Progress",
     };
-
-    try {
-      setIsSubmitting(true);
-
-      // Submit orderData to your order API here.
-      // The backend must validate price, stock, and buyer information.
-      console.log("Order submitted:", orderData);
-
-      alert("Order information captured successfully.");
-    } catch (error) {
-      console.error("Order submission error:", error);
-      alert("Unable to process your order. Please try again.");
-    } finally {
-      setIsSubmitting(false);
+    const res = await postOrder(finalData);
+    console.log("Order result:", res);
+    if (res.acknowledged) {
+      alert("Order placed successfully!");
+    } else {
+      alert("Failed to place order. Please try again.");
+      return;
     }
   };
 
@@ -117,7 +79,6 @@ const ProductPurchaseActions = ({ product, user }) => {
         <Button
           className="rounded-lg bg-[#102A4C] text-white"
           variant="primary"
-          isDisabled={availableQuantity < minimumQuantity}
         >
           <FiShoppingBag className="size-4" />
           Buy Now
@@ -168,44 +129,47 @@ const ProductPurchaseActions = ({ product, user }) => {
                       </TextField>
 
                       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                        <TextField name="unitPrice">
-                          <Label>Unit Price</Label>
-                          <Input value={formatPrice(unitPrice)} isReadOnly />
+                        <TextField
+                          name="unitPrice"
+                          defaultValue={product?.unitPrice || 0}
+                          isReadOnly
+                        >
+                          <Label>Unit Price/{product.unitOfMeasure}</Label>
+
+                          <Input isReadOnly />
                         </TextField>
 
-                        <TextField name="availableQuantity">
+                        <TextField
+                          defaultValue={product?.availableQuantity || 0}
+                          name="availableQuantity"
+                          isReadOnly
+                        >
                           <Label>Available Stock</Label>
-                          <Input
-                            value={`${availableQuantity} ${
-                              product?.unitOfMeasure || "units"
-                            }`}
-                            isReadOnly
-                          />
+                          <Input />
                         </TextField>
                       </div>
 
-                      <TextField name="quantity" isRequired>
+                      <TextField
+                        name="quantity"
+                        defaultValue={product?.minimumOrderQuantity}
+                        isRequired
+                      >
                         <Label>
                           Order Quantity ({product?.unitOfMeasure || "units"})
                         </Label>
 
                         <Input
                           type="number"
-                          min={minimumQuantity}
-                          max={availableQuantity}
                           step={1}
                           name="quantity"
-                          value={String(quantity)}
-                          onChange={(value) =>
-                            setQuantity(value === "" ? 0 : Number(value))
-                          }
+                          onChange={(e) => onChangeQuantity(e.target.value)}
                           isRequired
                           placeholder="Enter order quantity"
                         />
 
                         <FieldError />
                         <p className="text-xs text-slate-500">
-                          Minimum order: {minimumQuantity}{" "}
+                          Minimum order: {product?.minimumOrderQuantity}{" "}
                           {product?.unitOfMeasure || "units"}
                         </p>
                       </TextField>
@@ -283,7 +247,7 @@ const ProductPurchaseActions = ({ product, user }) => {
                         <Input
                           name="targetDate"
                           type="date"
-                          min={new Date().toLocaleDateString("en-CA")}
+                          // min={new Date().toLocaleDateString("en-CA")}
                           isRequired
                         />
                         <FieldError />
@@ -336,15 +300,18 @@ const ProductPurchaseActions = ({ product, user }) => {
                           Order Subtotal
                         </p>
 
-                        <p className="mt-1 text-xs text-slate-500">
+                        {/* <p className="mt-1 text-xs text-slate-500">
                           {quantity.toLocaleString()}{" "}
                           {product?.unitOfMeasure || "units"} ×{" "}
                           {formatPrice(unitPrice)}
-                        </p>
+                        </p> */}
                       </div>
 
                       <p className="text-xl font-extrabold text-[#102A4C]">
-                        {formatPrice(subtotal)}
+                        {totalPrice.toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                        })}
                       </p>
                     </div>
 
@@ -362,13 +329,8 @@ const ProductPurchaseActions = ({ product, user }) => {
                     <Button
                       type="submit"
                       className="w-full rounded-lg bg-[#102A4C] font-semibold text-white"
-                      isDisabled={
-                        isSubmitting ||
-                        quantity < minimumQuantity ||
-                        quantity > availableQuantity
-                      }
                     >
-                      {isSubmitting ? "Processing..." : "Continue with Order"}
+                      Order Now
                     </Button>
 
                     <Button

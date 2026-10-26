@@ -1,4 +1,4 @@
-import { Input, Avatar, Badge, Button, Chip } from "@heroui/react";
+import { Input, Avatar, Badge, Button, Chip, Dropdown } from "@heroui/react";
 import { FiSearch, FiBell } from "react-icons/fi";
 import Link from "next/link";
 import { HiOutlineLogout, HiOutlineNewspaper } from "react-icons/hi";
@@ -11,6 +11,7 @@ import NavLink from "./NavLink";
 import { GiRadarDish } from "react-icons/gi";
 import { FaHome } from "react-icons/fa";
 import { FaCartArrowDown } from "react-icons/fa6";
+import DropdownTrack from "./DropdownTrack";
 
 export default async function NavbarSection() {
   const session = await auth.api.getSession({
@@ -65,10 +66,8 @@ export default async function NavbarSection() {
             <HiOutlineNewspaper />
             <span>Request Product</span>
           </NavLink>
-          <NavLink href="/buyer/track-orders">
-            <GiRadarDish />
-            <span>Track Order</span>
-          </NavLink>
+
+          <DropdownTrack />
         </div>
 
         {/* Search & Actions */}
