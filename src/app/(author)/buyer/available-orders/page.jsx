@@ -2,11 +2,11 @@ import React from "react";
 import { Table, Button } from "@heroui/react";
 import { FiTruck } from "react-icons/fi";
 import { getOrders } from "@/lib/actions/getData";
+import Link from "next/link";
 
 const statusStyles = {
-  PROGRESS: "border-amber-300 bg-amber-50 text-amber-700",
+  PROCESSING: "border-amber-300 bg-amber-50 text-amber-700",
   COMPLETED: "border-purple-300 bg-purple-50 text-purple-700",
-  APPROVED: "border-emerald-300 bg-emerald-50 text-emerald-700",
 };
 
 export default async function OrdersTable() {
@@ -56,7 +56,7 @@ export default async function OrdersTable() {
                         title={order.id}
                         className="font-medium text-slate-700"
                       >
-                        {order.id.slice(0, 8)}...
+                        {order.productCode}
                       </span>
                     </Table.Cell>
 
@@ -84,12 +84,14 @@ export default async function OrdersTable() {
                     </Table.Cell>
 
                     <Table.Cell>
-                      <Button
-                        size="sm"
-                        className="rounded-lg bg-orange-600 px-3 font-semibold text-white hover:bg-orange-700"
-                      >
-                        View Details
-                      </Button>
+                      <Link href={`/buyer/products/${order.productCode}`}>
+                        <Button
+                          size="sm"
+                          className="rounded-lg bg-orange-600 px-3 font-semibold text-white hover:bg-orange-700"
+                        >
+                          View Details
+                        </Button>
+                      </Link>
                     </Table.Cell>
                   </Table.Row>
                 ))}

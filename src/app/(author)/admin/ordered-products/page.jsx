@@ -1,7 +1,5 @@
-import InspectButton from "@/Components/AdminSection/InspectButton";
-import { getAllPosts, getAllProducts, getPosts } from "@/lib/actions/getData";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import OrderAction from "@/Components/AdminSection/OrderAction";
+import { getOrders } from "@/lib/actions/getData";
 import React from "react";
 import {
   FiFileText,
@@ -140,7 +138,7 @@ function RequestCharts() {
 }
 
 export default async function RequestedProductsPage() {
-  const requests = await getAllProducts();
+  const requests = await getOrders();
   console.log("Fetched requests:", requests);
   const stats = {
     total: null,
@@ -264,7 +262,7 @@ export default async function RequestedProductsPage() {
                       </td>
 
                       <td className="px-4 py-4 text-slate-700">
-                        {request.supplierName || "N/A"}
+                        {request.buyerName || "N/A"}
                       </td>
 
                       <td className="px-4 py-4 font-medium text-slate-800">
@@ -272,14 +270,12 @@ export default async function RequestedProductsPage() {
                       </td>
 
                       <td className="px-4 py-4 whitespace-nowrap text-slate-600">
-                        {request.targetQuantity ?? "N/A"}{" "}
+                        {request.quantity ?? "N/A"}{" "}
                         {request.unitOfMeasure || ""}
                       </td>
 
                       <td className="px-4 py-4 whitespace-nowrap text-slate-700">
-                        {request.price != null
-                          ? `$${Number(request.unitPrice).toLocaleString()}`
-                          : "N/A"}
+                        ${request.totalPrice}
                       </td>
 
                       <td className="px-4 py-4">
@@ -306,11 +302,7 @@ export default async function RequestedProductsPage() {
                       <td className="px-4 py-4">
                         {/* Add your HeroUI Approve / Inspect actions here. */}
                         <span className="text-xs text-slate-400">
-                          {/* <InspectButton
-                            status={request.status}
-                            id={request._id}
-                            token={token}
-                          /> */}
+                          <OrderAction id={request._id} />
                         </span>
                       </td>
                     </tr>

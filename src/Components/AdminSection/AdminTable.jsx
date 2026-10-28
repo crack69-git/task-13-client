@@ -5,6 +5,7 @@ import Link from "next/link";
 import InspectButton from "./InspectButton";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import OrderAction from "./OrderAction";
 
 const AdminTable = async () => {
   const { token } = await auth.api.getToken({
@@ -35,7 +36,7 @@ const AdminTable = async () => {
                   <Table.Cell>
                     {item.targetQuantity} {item.unitOfMeasure}
                   </Table.Cell>
-                  <Table.Cell>${item.price}</Table.Cell>
+                  <Table.Cell>${item.totalPrice}</Table.Cell>
                   <Table.Cell>
                     <Chip
                       variant="flat"
@@ -46,11 +47,7 @@ const AdminTable = async () => {
                     .
                   </Table.Cell>
                   <Table.Cell>
-                    <InspectButton
-                      status={item.status}
-                      id={item._id}
-                      token={token}
-                    />
+                    <OrderAction />
                   </Table.Cell>
                 </Table.Row>
               ))}

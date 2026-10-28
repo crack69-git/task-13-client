@@ -205,7 +205,7 @@ const Page = async ({ params }) => {
 
               {/* Purchase Actions */}
               <ProductPurchaseActions
-                product={cartProduct}
+                product={res}
                 user={session?.user}
                 // disabled={!available}
               />

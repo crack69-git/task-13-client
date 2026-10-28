@@ -39,3 +39,23 @@ export const deletePost = async (id) => {
     throw error;
   }
 };
+
+export const deleteOrder = async (id) => {
+  try {
+    console.log("Deleting order with ID:", typeof id);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/delete/order/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error deleting order:", error);
+    throw error;
+  }
+};

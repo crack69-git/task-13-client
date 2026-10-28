@@ -61,7 +61,7 @@ const ProductPurchaseActions = ({ product, user }) => {
       ...product,
       ...data,
       totalPrice: totalPrice,
-      status: "On Progress",
+      status: "PROCESSING",
     };
     const res = await postOrder(finalData);
     console.log("Order result:", res);
