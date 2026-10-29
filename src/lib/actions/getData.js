@@ -179,3 +179,23 @@ export const getOrders = async () => {
     throw error;
   }
 };
+
+export const getSingleOrder = async (id) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/single/order/${id}`,
+      {
+        method: "GET",
+        cache: "no-store",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching single order:", error);
+    throw error;
+  }
+};

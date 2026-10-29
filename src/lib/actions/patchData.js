@@ -41,3 +41,23 @@ export const patchDelivaryStatus = async (id, delivaryStatus, token) => {
     throw error;
   }
 };
+
+export const patchOrderStatus = async (id, state) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/update/order/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ state }),
+      },
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error patching order status:", error);
+    throw error;
+  }
+};

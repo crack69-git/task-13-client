@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
 import { Button, Card, Chip, Separator } from "@heroui/react";
 import {
@@ -9,10 +6,6 @@ import {
   FiShoppingCart,
   FiClipboard,
   FiTruck,
-  FiSettings,
-  FiSearch,
-  FiBell,
-  FiChevronRight,
   FiArrowLeft,
   FiEdit2,
   FiDownload,
@@ -27,6 +20,9 @@ import {
   FiExternalLink,
 } from "react-icons/fi";
 import Image from "next/image";
+import OrderStatusUpdate from "@/Components/AdminSection/OrderStatusUpdate";
+import { getSingleOrder } from "@/lib/actions/getData";
+import { resolve } from "styled-jsx/css";
 
 const product = {
   id: "6ac74a2acbdba4e62d01c485e",
@@ -108,12 +104,12 @@ function Detail({ label, value }) {
   );
 }
 
-export default function ProductDetailsPage() {
-  const [status, setStatus] = useState(product.status);
-  const [editing, setEditing] = useState(false);
-
+export default async function ProductDetailsPage({ params }) {
   const total = product.quantity * product.unitPrice;
+  const { id } = await params;
 
+  const res = await getSingleOrder(id);
+  console.log("Fetched order details:", res);
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800">
       {/* Top navigation */}
@@ -126,39 +122,12 @@ export default function ProductDetailsPage() {
           {/* Page heading */}
           <div className="mb-7 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
             <div>
-              <Button
-                as={Link}
-                href="/admin/products"
-                variant="light"
-                size="sm"
-                startContent={<FiArrowLeft />}
-                className="mb-3 -ml-2 text-slate-600"
-              >
-                Back to products
-              </Button>
               <h1 className="text-2xl font-extrabold tracking-tight text-slate-950 sm:text-3xl">
                 Product Details
               </h1>
               <p className="mt-2 text-sm text-slate-500">
                 Review product information, supplier details and order status.
               </p>
-            </div>
-
-            <div className="flex flex-wrap gap-2">
-              <Button
-                variant="bordered"
-                startContent={<FiDownload />}
-                onPress={() => window.print()}
-              >
-                Print details
-              </Button>
-              <Button
-                color="primary"
-                startContent={<FiEdit2 />}
-                onPress={() => setEditing(!editing)}
-              >
-                {editing ? "Finish editing" : "Edit product"}
-              </Button>
             </div>
           </div>
 
@@ -167,51 +136,43 @@ export default function ProductDetailsPage() {
             <div className="p-5 sm:p-7">
               <div className="grid gap-7 md:grid-cols-[260px_minmax(0,1fr)] xl:grid-cols-[320px_minmax(0,1fr)]">
                 <div className="flex min-h-[250px] items-center justify-center overflow-hidden rounded-xl bg-slate-100 p-4">
-                  {/* <Image
-                    src={product.image}
-                    alt={product.name}
-                    width={100}
-                    height={100}
-                    className="max-h-[280px] max-w-full object-contain"
-                    fallbackSrc="https://placehold.co/600x600/f1f5f9/64748b?text=Product+Image"
-                  /> */}
+                  <Image
+                    src={res.productImage}
+                    alt={res.productName}
+                    width={600}
+                    height={600}
+                    className=" max-w-full object-contain"
+                  />
                 </div>
 
                 <div className="flex min-w-0 flex-col">
                   <div className="flex flex-wrap items-center gap-2">
                     <Chip size="sm" color="primary" variant="flat">
-                      {product.category}
+                      {res.productCategory.toUpperCase()}
                     </Chip>
-                    <Chip
-                      size="sm"
-                      color="success"
-                      variant="flat"
-                      startContent={<FiCheckCircle />}
-                    >
-                      {product.supplierPreference}
-                    </Chip>
+
                     <Chip size="sm" variant="bordered">
-                      {product.quality} quality
+                      {res.ProductQuality.toUpperCase()} quality
                     </Chip>
                   </div>
 
                   <h2 className="mt-4 text-2xl font-extrabold text-slate-950 sm:text-3xl">
-                    {product.name}
+                    {res.productName}
                   </h2>
                   <p className="mt-2 text-sm text-slate-500">
                     Brand:{" "}
                     <span className="font-semibold text-slate-800">
-                      {product.brand}
+                      {res.brandName}
                     </span>
                     <span className="mx-2">·</span>
                     SKU:{" "}
                     <span className="font-semibold text-slate-800">
-                      {product.code}
+                      {res.productCode}
                     </span>
                   </p>
 
                   <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-600">
-                    {product.description}
+                    {res.description}
                   </p>
 
                   <Separator className="my-5" />
@@ -220,37 +181,37 @@ export default function ProductDetailsPage() {
                     <div>
                       <p className="text-xs text-slate-500">Unit price</p>
                       <p className="mt-1 text-2xl font-extrabold text-blue-700">
-                        ৳{product.unitPrice.toLocaleString("en-BD")}
+                        ৳{res.unitPrice.toLocaleString("en-BD")}
                       </p>
                       <p className="text-xs text-slate-400">
-                        Per {product.unit}
+                        Per {res.unitOfMeasure}
                       </p>
                     </div>
                     <div>
                       <p className="text-xs text-slate-500">Available stock</p>
                       <p className="mt-1 text-2xl font-extrabold text-slate-900">
-                        {product.available.toLocaleString()}
+                        {res.availableQuantity.toLocaleString()}
                       </p>
-                      <p className="text-xs text-slate-400">{product.unit}</p>
+                      <p className="text-xs text-slate-400">
+                        {res.unitOfMeasure}
+                      </p>
                     </div>
                     <div>
                       <p className="text-xs text-slate-500">Minimum order</p>
                       <p className="mt-1 text-2xl font-extrabold text-slate-900">
-                        {product.minimumOrder}
+                        {res.minimumOrderQuantity}
                       </p>
-                      <p className="text-xs text-slate-400">{product.unit}</p>
+                      <p className="text-xs text-slate-400">
+                        {res.unitOfMeasure}
+                      </p>
                     </div>
                   </div>
-
-                  {editing && (
-                    <div className="mt-5 rounded-lg border border-blue-200 bg-blue-50 p-3 text-sm text-blue-800">
-                      Editing mode selected. Connect this form to your product
-                      update API to save changes.
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
+          </Card>
+          <Card className="mb-5">
+            <OrderStatusUpdate order={res}></OrderStatusUpdate>
           </Card>
 
           {/* Details grid */}
@@ -258,46 +219,48 @@ export default function ProductDetailsPage() {
             <div className="space-y-6 xl:col-span-2">
               <Section title="Product specifications" icon={FiFileText}>
                 <div className="grid grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-3">
-                  <Detail label="Product category" value={product.category} />
-                  <Detail label="Brand" value={product.brand} />
-                  <Detail label="Product code" value={product.code} />
-                  <Detail label="Unit of measure" value={product.unit} />
-                  <Detail label="Product quality" value={product.quality} />
-                  <Detail label="Certification" value={product.certification} />
-                  <Detail label="Country of origin" value={product.origin} />
-                  <Detail label="Shelf life" value={product.shelfLife} />
                   <Detail
-                    label="Specifications"
-                    value={product.specifications}
+                    label="Product category"
+                    value={res.productCategory}
                   />
+                  <Detail label="Brand" value={res.brandName} />
+                  <Detail label="Product code" value={res.productCode} />
+                  <Detail label="Unit of measure" value={res.unitOfMeasure} />
+                  <Detail label="Product quality" value={res.ProductQuality} />
+                  <Detail label="Certification" value={res.certification} />
+                  <Detail
+                    label="Country of origin"
+                    value={res.supplierLocation}
+                  />
+                  <Detail label="Shelf life" value={res.shelfLife} />
+                  <Detail label="Specifications" value={res.specifications} />
                 </div>
                 <Separator />
-                <Detail
-                  label="Additional notes"
-                  value={product.additionalNotes}
-                />
-                <Button
-                  as="a"
-                  href={product.attachment}
-                  target="_blank"
-                  rel="noreferrer"
-                  variant="bordered"
-                  className="w-fit"
-                  startContent={<FiFileText />}
-                  endContent={<FiExternalLink />}
-                >
-                  View product attachment
-                </Button>
+                <Detail label="Additional notes" value={res.additionalNotes} />
+                <div className="bg-blue-500  underline underline-offset-2  text-white w-fit rounded-lg mt-3">
+                  <Button
+                    as="a"
+                    href={res.attachmentLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    variant="bordered"
+                    className="w-fit "
+                    startContent={<FiFileText />}
+                    endContent={<FiExternalLink />}
+                  >
+                    View product attachment
+                  </Button>
+                </div>
               </Section>
 
               <Section title="Supplier information" icon={FiPackage}>
                 <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
                   <div>
                     <h3 className="text-lg font-bold text-slate-900">
-                      {product.supplierCompany}
+                      {res.supplierCompany}
                     </h3>
                     <p className="mt-1 text-sm text-slate-500">
-                      Contact person: {product.supplierName}
+                      Supplier: {res.supplierName}
                     </p>
                   </div>
                   <Chip
@@ -316,11 +279,11 @@ export default function ProductDetailsPage() {
                     label="Email address"
                     value={
                       <a
-                        href={`mailto:${product.supplierEmail}`}
+                        href={`mailto:${res.supplierEmail}`}
                         className="inline-flex items-center gap-2 text-blue-700 hover:underline"
                       >
                         <FiMail />
-                        {product.supplierEmail}
+                        {res.supplierEmail}
                       </a>
                     }
                   />
@@ -328,11 +291,11 @@ export default function ProductDetailsPage() {
                     label="Phone number"
                     value={
                       <a
-                        href={`tel:${product.supplierPhone}`}
+                        href={`tel:${res.supplierPhone}`}
                         className="inline-flex items-center gap-2 text-blue-700 hover:underline"
                       >
                         <FiPhone />
-                        {product.supplierPhone}
+                        {res.supplierPhone}
                       </a>
                     }
                   />
@@ -341,7 +304,7 @@ export default function ProductDetailsPage() {
                     value={
                       <span className="inline-flex items-center gap-2">
                         <FiMapPin />
-                        {product.supplierLocation}
+                        {res.supplierLocation}
                       </span>
                     }
                   />
@@ -356,22 +319,19 @@ export default function ProductDetailsPage() {
                 <div className="grid grid-cols-2 gap-6 sm:grid-cols-3">
                   <Detail
                     label="Delivery address"
-                    value={product.deliveryAddress}
+                    value={res.deliveryAddress}
                   />
                   <Detail
                     label="Destination country"
-                    value={product.deliveryCountry}
+                    value={res.deliveryCountry}
                   />
                   <Detail
                     label="Estimated delivery"
-                    value={product.estimatedDelivery}
+                    value={res.estimateDelivery}
                   />
-                  <Detail
-                    label="Delivery terms"
-                    value={product.deliveryTerms}
-                  />
-                  <Detail label="Payment terms" value={product.paymentTerms} />
-                  <Detail label="Target date" value={product.targetDate} />
+                  <Detail label="Delivery terms" value={res.deliveryTerms} />
+                  <Detail label="Payment terms" value={res.paymentTerms} />
+                  <Detail label="Target date" value={res.targetDate} />
                 </div>
               </Section>
             </div>
@@ -379,34 +339,15 @@ export default function ProductDetailsPage() {
             {/* Order summary */}
             <div className="space-y-6">
               <Section title="Order summary" icon={FiShoppingCart}>
-                <div className="flex items-center justify-between gap-3">
-                  <span className="text-sm text-slate-500">Order status</span>
-                  <Chip
-                    color={
-                      status === "COMPLETED"
-                        ? "success"
-                        : status === "CANCELLED"
-                          ? "danger"
-                          : "warning"
-                    }
-                    variant="flat"
-                    startContent={
-                      status === "COMPLETED" ? <FiCheckCircle /> : <FiClock />
-                    }
-                  >
-                    {status}
-                  </Chip>
-                </div>
-
                 <Separator />
 
                 <div className="space-y-4">
-                  <Detail label="Buyer" value={product.buyerName} />
-                  <Detail label="Buyer email" value={product.buyerEmail} />
-                  <Detail label="Buyer phone" value={product.buyerPhone} />
+                  <Detail label="Buyer" value={res.buyerName} />
+                  <Detail label="Buyer email" value={res.buyerEmail} />
+                  <Detail label="Buyer phone" value={res.buyerPhone} />
                   <Detail
                     label="Order quantity"
-                    value={`${product.quantity} ${product.unit}`}
+                    value={`${res.quantity} ${res.unitOfMeasure}`}
                   />
                 </div>
 
@@ -416,12 +357,12 @@ export default function ProductDetailsPage() {
                   <div className="flex justify-between gap-3">
                     <span className="text-slate-500">Unit price</span>
                     <span className="font-semibold">
-                      ৳{product.unitPrice.toLocaleString("en-BD")}
+                      ৳{res.unitPrice.toLocaleString("en-BD")}
                     </span>
                   </div>
                   <div className="flex justify-between gap-3">
                     <span className="text-slate-500">Quantity</span>
-                    <span className="font-semibold">{product.quantity}</span>
+                    <span className="font-semibold">{res.quantity}</span>
                   </div>
                   <Separator />
                   <div className="flex items-center justify-between gap-3">
@@ -429,7 +370,7 @@ export default function ProductDetailsPage() {
                       Total price
                     </span>
                     <span className="text-2xl font-extrabold text-blue-700">
-                      ৳{total.toLocaleString("en-BD")}
+                      ${res.totalPrice}
                     </span>
                   </div>
                   <p className="text-xs text-slate-400">
@@ -439,53 +380,17 @@ export default function ProductDetailsPage() {
                 </div>
 
                 <Separator />
-
-                {/* <label
-                  htmlFor="order-status"
-                  className="text-sm font-semibold text-slate-700"
-                >
-                  Update order status
-                </label>
-                <select
-                  id="order-status"
-                  value={status}
-                  onChange={(event) => setStatus(event.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-                >
-                  <option value="PROCESSING">Processing</option>
-                  <option value="CONFIRMED">Confirmed</option>
-                  <option value="SHIPPED">Shipped</option>
-                  <option value="COMPLETED">Completed</option>
-                  <option value="CANCELLED">Cancelled</option>
-                </select>
-
-                <Button
-                  color="primary"
-                  className="w-full font-semibold"
-                  startContent={<FiCheckCircle />}
-                  onPress={() => {
-                    alert(
-                      `Selected status: ${status}. Connect this action to your order update API to persist the change.`,
-                    );
-                  }}
-                >
-                  Save order status
-                </Button> */}
               </Section>
 
               <Section title="Record information" icon={FiClipboard}>
-                <Detail label="Record ID" value={product.id} />
                 <Detail
                   label="Created at"
-                  value={new Date(product.createdAt).toLocaleString("en-GB", {
-                    dateStyle: "medium",
-                    timeStyle: "short",
-                  })}
+                  value={res.createdAt.toLocaleString("en-BD")}
                 />
-                <Detail label="Product code" value={product.code} />
+                <Detail label="Product code" value={res.productCode} />
                 <div className="flex items-start gap-2 text-xs leading-5 text-slate-500">
                   <FiCreditCard className="mt-0.5 shrink-0" />
-                  Payment terms: {product.paymentTerms}
+                  Payment terms: {res.paymentTerms}
                 </div>
               </Section>
             </div>
