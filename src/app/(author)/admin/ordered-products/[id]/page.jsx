@@ -123,19 +123,6 @@ export default function ProductDetailsPage() {
 
         {/* Main content */}
         <main className="min-w-0 flex-1 p-4 sm:p-7 lg:p-9">
-          {/* Breadcrumb */}
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-slate-500">
-            <Link href="/admin/dashboard" className="hover:text-blue-700">
-              Dashboard
-            </Link>
-            <FiChevronRight />
-            <Link href="/admin/products" className="hover:text-blue-700">
-              All Products
-            </Link>
-            <FiChevronRight />
-            <span className="font-semibold text-slate-800">Details</span>
-          </div>
-
           {/* Page heading */}
           <div className="mb-7 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
             <div>
@@ -453,7 +440,7 @@ export default function ProductDetailsPage() {
 
                 <Separator />
 
-                <label
+                {/* <label
                   htmlFor="order-status"
                   className="text-sm font-semibold text-slate-700"
                 >
@@ -483,7 +470,7 @@ export default function ProductDetailsPage() {
                   }}
                 >
                   Save order status
-                </Button>
+                </Button> */}
               </Section>
 
               <Section title="Record information" icon={FiClipboard}>
