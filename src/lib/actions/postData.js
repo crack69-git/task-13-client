@@ -95,13 +95,17 @@ export const postCart = async (data) => {
 
 export const postOrder = async (data) => {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/order`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/order/post`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       },
-      body: JSON.stringify(data),
-    });
+    );
+    console.log("Response from postOrder:", response);
     if (!response.ok) {
       throw new Error("Failed to post order");
     }

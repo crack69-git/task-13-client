@@ -1,5 +1,6 @@
 "use client";
 
+// import { patchProductQuantity } from "@/lib/actions/patchData";
 import { postCart, postOrder } from "@/lib/actions/postData";
 import {
   Button,
@@ -58,6 +59,7 @@ const ProductPurchaseActions = ({ product, user }) => {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
     const finalData = {
+      id: product._id,
       ...product,
       ...data,
       totalPrice: totalPrice,
@@ -67,6 +69,10 @@ const ProductPurchaseActions = ({ product, user }) => {
     console.log("Order result:", res);
     if (res.acknowledged) {
       alert("Order placed successfully!");
+      // const remainingQuantity =
+      //   Number(product.availableQuantity) - Number(quantity);
+      // console.log("Remaining quantity:", remainingQuantity);
+      // const update = await patchProductQuantity(product.id, remainingQuantity);
     } else {
       alert("Failed to place order. Please try again.");
       return;

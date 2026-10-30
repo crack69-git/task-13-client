@@ -207,13 +207,6 @@ function ProductCard({ product }) {
             View Product
             <FiArrowRight className="size-4" />
           </Link>
-
-          <Link
-            href={`/buyer?product=${product.id}`}
-            className="flex items-center justify-center rounded-xl border border-slate-200 px-4 py-3 text-xs font-bold text-slate-700 transition hover:border-cyan-200 hover:bg-cyan-50 hover:text-cyan-700"
-          >
-            Request
-          </Link>
         </div>
       </div>
     </article>
