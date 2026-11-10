@@ -95,6 +95,7 @@ export const postCart = async (data) => {
 
 export const postOrder = async (data) => {
   try {
+    console.log("Posting order with data:", data);
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_URL}/api/order/post`,
       {

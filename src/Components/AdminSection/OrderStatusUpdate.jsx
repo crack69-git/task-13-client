@@ -1,6 +1,6 @@
 "use client";
 
-import { patchOrderStatus } from "@/lib/actions/patchData";
+import { patchOrderStatus, updateOrderStatus } from "@/lib/actions/patchData";
 import {
   Checkbox,
   CheckboxGroup,
@@ -22,12 +22,17 @@ import {
 const OrderStatusUpdate = ({ order }) => {
   const router = useRouter();
   const handleCheckboxChange = async (value) => {
+    console.log("Selected stage:", value);
     const res = await patchOrderStatus(order._id, value);
     console.log("Order status updated:", res);
     if (res.updatedCount > 0) {
       router.refresh();
       if (order.state.length === 5) {
         alert("order status updated successfully! All stages completed.");
+        const response = await updateOrderStatus(order._id, "Delivered");
+        console.log("Order status updated to Delivered:", response);
+      } else {
+        const response = await updateOrderStatus(order._id, "Pending");
       }
     } else {
       alert("Failed to update order status. Please try again.");

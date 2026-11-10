@@ -60,7 +60,22 @@ const ProductPurchaseActions = ({ product, user }) => {
     const data = Object.fromEntries(formData.entries());
     const finalData = {
       id: product._id,
-      ...product,
+      productName: product.productName,
+      supplierCompany: product.supplierCompany,
+      unitPrice: product.unitPrice,
+      unitOfMeasure: product.unitOfMeasure,
+      buyerName: data.buyerName,
+      buyerEmail: data.buyerEmail,
+      buyerPhone: data.buyerPhone,
+      deliveryAddress: data.deliveryAddress,
+      deliveryCountry: data.deliveryCountry,
+      targetDate: data.targetDate,
+      deliveryTerms: data.deliveryTerms,
+      paymentTerms: data.paymentTerms,
+      specifications: data.specifications,
+      quantity: quantity,
+      category: product.productCategory,
+
       ...data,
       totalPrice: totalPrice,
       status: "PROCESSING",
